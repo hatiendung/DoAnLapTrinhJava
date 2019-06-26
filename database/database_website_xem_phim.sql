@@ -30,7 +30,7 @@ CREATE TABLE `actor` (
   PRIMARY KEY (`id_actor`),
   KEY `fk_quoctich_dv_idx` (`id_country`),
   CONSTRAINT `fk_quoctich_dv` FOREIGN KEY (`id_country`) REFERENCES `country` (`id_country`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `actor` (
 
 LOCK TABLES `actor` WRITE;
 /*!40000 ALTER TABLE `actor` DISABLE KEYS */;
-INSERT INTO `actor` VALUES (1,'Lưu Đào','luu-dao',4),(2,'Dương Thước','duong-thuoc',4),(3,'Kim Thần','kim-than',4),(4,'Lưu Đoan Đoan','luu-doan-doan',4),(5,'Trình Tranh','trinh-tranh',4),(6,'Thái Tử Luân','thai-tu-luan',4),(7,'Vương Nhược Tuyết','vuong-nhuoc-tuyet',4),(8,'Nhậm Lệ','nham-le',4);
+INSERT INTO `actor` VALUES (1,'Lưu Đào','luu-dao',4),(2,'Dương Thước','duong-thuoc',4),(3,'Kim Thần','kim-than',4),(4,'Lưu Đoan Đoan','luu-doan-doan',4),(5,'Trình Tranh','trinh-tranh',4),(6,'Thái Tử Luân','thai-tu-luan',4),(7,'Vương Nhược Tuyết','vuong-nhuoc-tuyet',4),(8,'Nhậm Lệ','nham-le',4),(9,'NSƯT Nguyễn Trọng Trinh','nsut-nguyen-trong-trinh',1),(10,'Lan Phương','lan-phuong',1),(11,'Thanh Sơn','thanh-son',1),(12,'Thanh Hương','thanh-huong',1),(13,'Phương Oanh','phuong-oanh',1),(14,'NSƯT Minh Vượng','nsut-minh-vuong',1),(15,'16520254','16520254-15',1),(16,'dv1','dv1-16',1),(17,'dien vien mới','dien-vien-moi-17',6),(18,'dien vien test','dien-vien-test-18',3),(19,'dien vien','dien-vien-19',1);
 /*!40000 ALTER TABLE `actor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,11 +103,12 @@ DROP TABLE IF EXISTS `director`;
 CREATE TABLE `director` (
   `id_director` int(11) NOT NULL AUTO_INCREMENT,
   `name_director` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `code_director` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `id_country` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_director`),
   KEY `fk_quoctich_daodien_idx` (`id_country`),
   CONSTRAINT `fk_quoctich_daodien` FOREIGN KEY (`id_country`) REFERENCES `country` (`id_country`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,6 +117,7 @@ CREATE TABLE `director` (
 
 LOCK TABLES `director` WRITE;
 /*!40000 ALTER TABLE `director` DISABLE KEYS */;
+INSERT INTO `director` VALUES (1,'dao dien 1','dao-dien-1-1',4),(2,'NSƯT Nguyễn Trọng Trinh	','nsut-nguyen-trong-trinh	-2',1),(3,'dao','dao-3',1);
 /*!40000 ALTER TABLE `director` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +136,7 @@ CREATE TABLE `episode` (
   PRIMARY KEY (`id_episode`),
   KEY `fk_movie_idx` (`id_movie`),
   CONSTRAINT `dsafsadf` FOREIGN KEY (`id_movie`) REFERENCES `movie` (`id_movie`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +145,7 @@ CREATE TABLE `episode` (
 
 LOCK TABLES `episode` WRITE;
 /*!40000 ALTER TABLE `episode` DISABLE KEYS */;
-INSERT INTO `episode` VALUES (23,'phim-moi-26-tap-1-2',1,37),(24,'phim-moi-26-tap-2-2',2,37),(25,'phim-moi-12222-25-tap-1-4',1,36),(26,'phim-moi-12222-25-tap-2-4',2,36),(29,'phim-moi-38-tap-1-6',1,52),(30,'phim-moi-38-tap-2-6',2,52),(31,'phim-moi-38-tap-3-7',3,52);
+INSERT INTO `episode` VALUES (23,'phim-moi-26-tap-1-2',1,37),(24,'phim-moi-26-tap-2-2',2,37),(25,'phim-moi-12222-25-tap-1-4',1,36),(26,'phim-moi-12222-25-tap-2-4',2,36),(29,'phim-moi-38-tap-1-6',1,52),(30,'phim-moi-38-tap-2-6',2,52),(31,'phim-moi-38-tap-3-7',3,52),(32,'demo-dien-vien-1-29-tap-1-9',1,67);
 /*!40000 ALTER TABLE `episode` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,7 +159,6 @@ DROP TABLE IF EXISTS `movie`;
 CREATE TABLE `movie` (
   `id_movie` int(11) NOT NULL AUTO_INCREMENT,
   `name_movie` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `name_english` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `content` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `status` int(2) DEFAULT NULL,
   `link_movie` varchar(45) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -179,7 +180,7 @@ CREATE TABLE `movie` (
   CONSTRAINT `fk_daodiensx` FOREIGN KEY (`id_director`) REFERENCES `director` (`id_director`),
   CONSTRAINT `fk_quocgia_sx` FOREIGN KEY (`id_country_produce`) REFERENCES `country` (`id_country`),
   CONSTRAINT `fk_user_post` FOREIGN KEY (`id_user_post`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +189,7 @@ CREATE TABLE `movie` (
 
 LOCK TABLES `movie` WRITE;
 /*!40000 ALTER TABLE `movie` DISABLE KEYS */;
-INSERT INTO `movie` VALUES (9,'Chúng Ta Đều Phải Sống Tốt',NULL,'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',0,'chung-ta-đeu-phai-song-tot-1',11,'2019-05-13 01:18:01',NULL,70,2019,4,NULL,NULL),(10,'Bạch Phát',NULL,'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',0,'bach-phat-2',1,'2019-05-13 01:19:23',NULL,7,2019,4,NULL,NULL),(11,'Chúng Ta Đều Phải Sống Tốt',NULL,'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',1,'chung-ta-đeu-phai-song-tot-3',0,'2019-05-13 01:19:41',NULL,1,2019,1,NULL,NULL),(12,'Chiêu Diêu',NULL,'when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',0,'chieu-dieu-4',55,'2019-05-13 01:19:56',NULL,3,2019,4,NULL,NULL),(13,'Lưỡng Thế Hoan','printing and typesettin','when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',1,'luong-the-hoan-5',0,'2019-05-13 01:21:18',NULL,3,2019,4,NULL,NULL),(16,'Chạy Đi Chờ Chi',NULL,'Chạy Đi Chờ Chi là phiên bản Việt hóa của chương trình từ Hàn Quốc, nhưng phía điều hành và sản xuất cho biết, điểm nhấn của chương trình Chạy Đi Chờ Chi, cũng giống như tên gọi, sẽ là một chương trình đậm chất Việt Nam. Toàn bộ ê-kíp của SBS Running Man Hàn Quốc sang tận Việt Nam, lựa chọn những điều “rất Việt” vào chương trình, với hy vọng làm nên một mô hình giải trí gần gũi với khán giả và xa hơn, là giới thiệu được những đặc trưng văn hóa Việt Nam đến người xem toàn Thế giới.\r\n',1,'chay-đi-cho-chi-8',11,'2019-05-13 02:05:37',NULL,0,2019,1,NULL,NULL),(17,'Mê Cung',NULL,'Mê Cung đưa người xem lạc vào một mê cung khó tìm được lối ra. Phim bắt đầu bằng vụ án một cô gái trẻ bị sát hại trong đêm tại một xóm trọ. Hung thủ bị bắt ngay sau đó với những chứng cớ buộc tội đanh thép. Vụ án tưởng chừng khép lại nếu như Khánh (Hồng Đăng) - Đội trưởng đội hình sự - không kiên quyết lật ngược vấn đề và tìm ra vụ án tương tụ diễn ra trước đó 2 tháng. Hai nạn nhân khá thân nhau. Hai gã hung thủ đều bị bắt rất nhanh với chất kích thích vẫn còn trong máu. Nhưng liệu những kẻ đó có phải hung thủ thực sự hay chỉ là con tốt thí mạng cho kế hoạch hoàn hảo của tên sát nhân thông minh đến mức biến thái?',0,'me-cung-9',4,'2019-05-13 02:06:21',NULL,2,2019,1,NULL,NULL),(18,'Thần Thám',NULL,'Thần Thám kể về Bạch Vũ một lần nữa hóa thân vào vai một trinh sát nhân dân mẫn cán, làm việc bảo vệ lẽ phải tên La Phi. Sở hữu chỉ số IQ cao cùng thân thủ rất tốt, La Phi thường một mình làm việc, phá bỏ nhiều vụ án quan trọng, đầy cam go.',1,'than-tham-10',3,'2019-05-13 10:03:48',NULL,0,2019,4,NULL,NULL),(19,'Chiêu Diêu',NULL,'sdfsd',0,'chieu-dieu-11',0,'2019-05-14 09:59:23',NULL,0,2019,2,NULL,NULL),(20,'Lưỡng Thế Hoan','Lưỡng Thế Hoan','Lưỡng Thế Hoan',1,'abc-12',0,'2019-05-14 10:42:40',NULL,1,2019,1,NULL,NULL),(23,'phim moi',NULL,'noi dung phim',1,'phim-moi-13',0,'2019-06-19 19:53:48',NULL,7,2017,2,NULL,NULL),(25,'phim moi 1',NULL,'adđ',1,'phim-moi-1-14',0,'2019-06-19 21:28:13',NULL,0,2019,1,NULL,NULL),(26,'phim moi 12',NULL,'2',1,'phim-moi-12-15',0,'2019-06-19 21:29:09',NULL,0,2019,1,NULL,NULL),(27,'phim moi 3',NULL,'4',1,'phim-moi-3-16',0,'2019-06-19 21:29:22',NULL,0,2019,1,NULL,NULL),(28,'phim moi 4',NULL,'ddd',1,'phim-moi-4-17',0,'2019-06-19 21:30:48',NULL,0,2019,1,NULL,NULL),(29,'phim môi 5',NULL,'33',1,'phim-moi-5-18',0,'2019-06-19 21:31:25',NULL,0,2019,1,NULL,NULL),(30,'dddd',NULL,'eeee',1,'dddd-19',0,'2019-06-19 21:31:42',NULL,0,2019,1,NULL,NULL),(31,'phim moi 14',NULL,'4',1,'phim-moi-14-20',0,'2019-06-19 21:32:02',NULL,0,2019,1,NULL,NULL),(32,'phim moi 124',NULL,'3333',1,'phim-moi-124-21',0,'2019-06-19 21:32:49',NULL,5,2019,1,NULL,NULL),(33,'sdfadf',NULL,'d',1,'sdfadf-22',0,'2019-06-19 21:33:04',NULL,0,2019,1,NULL,NULL),(34,'32324',NULL,'22',1,'32324-23',0,'2019-06-19 21:33:19',NULL,30,2019,1,NULL,NULL),(35,'phim moi11',NULL,'3',1,'phim-moi11-24',0,'2019-06-20 01:16:20',NULL,15,2019,1,NULL,NULL),(36,'phim moi 12222',NULL,'sdfsdf',1,'phim-moi-12222-25',0,'2019-06-20 01:16:35',NULL,15,2019,1,NULL,NULL),(37,'phim moi',NULL,'sdfadf',0,'phim-moi-26',0,'2019-06-20 02:07:02',NULL,5,2019,1,NULL,NULL),(52,'phim moi',NULL,'sdfsdf',1,'phim-moi-38',0,'2019-06-23 12:34:52',NULL,7,2019,1,5,NULL);
+INSERT INTO `movie` VALUES (9,'Chúng Ta Đều Phải Sống Tốt','when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',0,'chung-ta-đeu-phai-song-tot-1',11,'2019-05-13 01:18:01',NULL,79,2019,4,NULL,NULL),(10,'Bạch Phát','when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',0,'bach-phat-2',1,'2019-05-13 01:19:23',NULL,9,2019,4,NULL,NULL),(11,'Chúng Ta Đều Phải Sống Tốt','when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',1,'chung-ta-đeu-phai-song-tot-3',0,'2019-05-13 01:19:41',NULL,1,2019,1,NULL,NULL),(12,'Chiêu Diêu','when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',0,'chieu-dieu-4',55,'2019-05-13 01:19:56',NULL,3,2019,4,NULL,NULL),(13,'Lưỡng Thế Hoan','when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',1,'luong-the-hoan-5',0,'2019-05-13 01:21:18',NULL,3,2019,4,NULL,NULL),(16,'Chạy Đi Chờ Chi','Chạy Đi Chờ Chi là phiên bản Việt hóa của chương trình từ Hàn Quốc, nhưng phía điều hành và sản xuất cho biết, điểm nhấn của chương trình Chạy Đi Chờ Chi, cũng giống như tên gọi, sẽ là một chương trình đậm chất Việt Nam. Toàn bộ ê-kíp của SBS Running Man Hàn Quốc sang tận Việt Nam, lựa chọn những điều “rất Việt” vào chương trình, với hy vọng làm nên một mô hình giải trí gần gũi với khán giả và xa hơn, là giới thiệu được những đặc trưng văn hóa Việt Nam đến người xem toàn Thế giới.\r\n',1,'chay-đi-cho-chi-8',1,'2019-05-13 02:05:37',NULL,0,2019,1,NULL,NULL),(17,'Mê Cung','Mê Cung đưa người xem lạc vào một mê cung khó tìm được lối ra. Phim bắt đầu bằng vụ án một cô gái trẻ bị sát hại trong đêm tại một xóm trọ. Hung thủ bị bắt ngay sau đó với những chứng cớ buộc tội đanh thép. Vụ án tưởng chừng khép lại nếu như Khánh (Hồng Đăng) - Đội trưởng đội hình sự - không kiên quyết lật ngược vấn đề và tìm ra vụ án tương tụ diễn ra trước đó 2 tháng. Hai nạn nhân khá thân nhau. Hai gã hung thủ đều bị bắt rất nhanh với chất kích thích vẫn còn trong máu. Nhưng liệu những kẻ đó có phải hung thủ thực sự hay chỉ là con tốt thí mạng cho kế hoạch hoàn hảo của tên sát nhân thông minh đến mức biến thái?',0,'me-cung-9',1,'2019-05-13 02:06:21',NULL,2,2019,1,NULL,NULL),(18,'Thần Thám','Thần Thám kể về Bạch Vũ một lần nữa hóa thân vào vai một trinh sát nhân dân mẫn cán, làm việc bảo vệ lẽ phải tên La Phi. Sở hữu chỉ số IQ cao cùng thân thủ rất tốt, La Phi thường một mình làm việc, phá bỏ nhiều vụ án quan trọng, đầy cam go.',1,'than-tham-10',1,'2019-05-13 10:03:48',NULL,0,2019,4,NULL,NULL),(19,'Chiêu Diêu','sdfsd',0,'chieu-dieu-11',1,'2019-05-14 09:59:23',NULL,0,2019,2,NULL,NULL),(20,'Lưỡng Thế Hoan','Lưỡng Thế Hoan',1,'abc-12',1,'2019-05-14 10:42:40',NULL,1,2019,1,NULL,NULL),(23,'phim moi','noi dung phim',1,'phim-moi-13',1,'2019-06-19 19:53:48',NULL,14,2017,2,NULL,NULL),(25,'phim moi 1','adđ',1,'phim-moi-1-14',0,'2019-06-19 21:28:13',NULL,0,2019,1,NULL,NULL),(26,'phim moi 12','2',1,'phim-moi-12-15',1,'2019-06-19 21:29:09',NULL,0,2019,1,NULL,NULL),(27,'phim moi 3','4',1,'phim-moi-3-16',1,'2019-06-19 21:29:22',NULL,0,2019,1,NULL,NULL),(28,'phim moi 4','ddd',1,'phim-moi-4-17',1,'2019-06-19 21:30:48',NULL,0,2019,1,NULL,NULL),(29,'phim môi 5','33',1,'phim-moi-5-18',1,'2019-06-19 21:31:25',NULL,0,2019,1,NULL,NULL),(30,'dddd','eeee',1,'dddd-19',1,'2019-06-19 21:31:42',NULL,6,2019,1,NULL,NULL),(31,'phim moi 14','4',1,'phim-moi-14-20',1,'2019-06-19 21:32:02',NULL,0,2019,1,NULL,NULL),(32,'phim moi 124','3333',1,'phim-moi-124-21',1,'2019-06-19 21:32:49',NULL,13,2019,1,NULL,NULL),(33,'sdfadf','d',1,'sdfadf-22',1,'2019-06-19 21:33:04',NULL,0,2019,1,NULL,NULL),(34,'32324','22',1,'32324-23',1,'2019-06-19 21:33:19',NULL,31,2019,1,NULL,NULL),(35,'phim moi11','3',1,'phim-moi11-24',1,'2019-06-20 01:16:20',NULL,15,2019,1,NULL,NULL),(36,'phim moi 12222','sdfsdf',1,'phim-moi-12222-25',1,'2019-06-20 01:16:35',NULL,24,2019,1,NULL,NULL),(37,'phim moi','sdfadf',0,'phim-moi-26',1,'2019-06-20 02:07:02',NULL,6,2019,1,NULL,NULL),(52,'phim moi','sdfsdf',1,'phim-moi-38',1,'2019-06-23 12:34:52',NULL,8,2019,1,5,NULL),(53,'phim hay','phim moi',1,'phim-hay-26',5,'2019-06-24 00:02:04',NULL,2,2019,1,5,NULL),(54,'phim moi 1','sddddd',2,'phim-moi-1-27',1,'2019-06-24 00:04:59',NULL,3,2018,3,5,NULL),(66,'demo dien vien','noi dung phim',1,'demo-dien-vien-28',10,'2019-06-26 00:05:13',NULL,0,2018,1,5,NULL),(67,'demo dien vien 1','madf',1,'demo-dien-vien-1-29',12,'2019-06-26 00:22:22',NULL,2,2018,4,5,NULL),(69,'demo','nddemo',1,'demo-30',12,'2019-06-26 19:43:25',NULL,1,2019,1,5,NULL),(70,'them phim moi','noi dung phim',1,'them-phim-moi-31',12,'2019-06-26 21:30:50',NULL,5,2018,1,5,1);
 /*!40000 ALTER TABLE `movie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +218,7 @@ CREATE TABLE `movie_actor` (
 
 LOCK TABLES `movie_actor` WRITE;
 /*!40000 ALTER TABLE `movie_actor` DISABLE KEYS */;
-INSERT INTO `movie_actor` VALUES (9,1),(9,2),(9,3),(9,4),(9,5),(9,6),(9,7),(9,8),(10,1),(10,2),(10,3),(10,8);
+INSERT INTO `movie_actor` VALUES (9,1),(9,2),(9,3),(9,4),(9,5),(9,6),(9,7),(9,8),(10,1),(10,2),(10,3),(10,8),(66,1),(66,2),(66,8),(67,3),(67,6),(69,3),(69,18),(70,4),(70,6),(70,11);
 /*!40000 ALTER TABLE `movie_actor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -246,7 +247,7 @@ CREATE TABLE `movie_category` (
 
 LOCK TABLES `movie_category` WRITE;
 /*!40000 ALTER TABLE `movie_category` DISABLE KEYS */;
-INSERT INTO `movie_category` VALUES (9,1),(10,1),(13,1),(52,1),(9,2),(10,2),(11,2),(12,2),(9,3),(10,3),(11,3),(12,3),(9,4),(10,4),(11,4),(12,4),(52,4),(10,5),(11,5),(12,5),(10,6),(11,6);
+INSERT INTO `movie_category` VALUES (9,1),(10,1),(13,1),(52,1),(53,1),(54,1),(66,1),(67,1),(69,1),(70,1),(9,2),(10,2),(11,2),(12,2),(54,2),(9,3),(10,3),(11,3),(12,3),(9,4),(10,4),(11,4),(12,4),(52,4),(53,4),(54,4),(66,4),(67,4),(69,4),(70,4),(10,5),(11,5),(12,5),(53,5),(54,5),(66,5),(70,5),(10,6),(11,6),(54,7),(67,7),(69,7),(70,7),(54,8),(66,8);
 /*!40000 ALTER TABLE `movie_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -289,7 +290,7 @@ CREATE TABLE `slide` (
   PRIMARY KEY (`id_slide`),
   KEY `fk_abcdddd_idx` (`id_movie`),
   CONSTRAINT `fk_abcdddd` FOREIGN KEY (`id_movie`) REFERENCES `movie` (`id_movie`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -298,7 +299,7 @@ CREATE TABLE `slide` (
 
 LOCK TABLES `slide` WRITE;
 /*!40000 ALTER TABLE `slide` DISABLE KEYS */;
-INSERT INTO `slide` VALUES (1,'slide1',1,9),(2,'slide2',1,10),(3,'slide3',1,11),(4,'slide4',0,12);
+INSERT INTO `slide` VALUES (1,'slide1',1,9),(2,'slide2',1,10),(3,'slide3',1,11),(4,'slide4',0,12),(10,'slide-demo-dien-vien-28',1,66),(11,'slide-them-phim-moi-31',1,70);
 /*!40000 ALTER TABLE `slide` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,7 +318,7 @@ CREATE TABLE `trailer` (
   PRIMARY KEY (`id_trailer`),
   KEY `fk_asdfsdf_idx` (`id_movie`),
   CONSTRAINT `fk_asdfsdf` FOREIGN KEY (`id_movie`) REFERENCES `movie` (`id_movie`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,7 +327,7 @@ CREATE TABLE `trailer` (
 
 LOCK TABLES `trailer` WRITE;
 /*!40000 ALTER TABLE `trailer` DISABLE KEYS */;
-INSERT INTO `trailer` VALUES (1,'phim-moi-38-trailer-1-2','1',52);
+INSERT INTO `trailer` VALUES (1,'phim-moi-38-trailer-1-2','1',52),(2,'demo-dien-vien-1-29-trailer-1-3','1',67);
 /*!40000 ALTER TABLE `trailer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +345,7 @@ CREATE TABLE `user` (
   `datetime_created` datetime DEFAULT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +354,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (5,'admin@gmail.com','$2a$10$zmsKgf/vaU04X2AqLdG6mOEeCNXurX4B0dwedoTmzOHQGKgtvTiE6','2019-06-18 00:00:00'),(6,'user@gmail.com','$2a$10$OHeltD6NB6C2ChwsuqxOQ.90Q8PGU9chUQK5FE22NGF9/i9jVi1V6',NULL),(7,'user1@gmail.com','$2a$10$nVvYv3WGnk2NhIrL.mp9LOg1lORQoP5uxcv9s8ofhwAOPFKRw.93K',NULL),(8,'user2@gmail.com','$2a$10$0g7xuHZ6MeMzVw8x0F44PeF/7ngpDZaxp4NBDAZWpfDMJ8sBxZ9i.',NULL);
+INSERT INTO `user` VALUES (5,'admin@gmail.com','$2a$10$zmsKgf/vaU04X2AqLdG6mOEeCNXurX4B0dwedoTmzOHQGKgtvTiE6','2019-06-18 00:00:00'),(6,'user@gmail.com','$2a$10$OHeltD6NB6C2ChwsuqxOQ.90Q8PGU9chUQK5FE22NGF9/i9jVi1V6','2019-06-18 00:00:00'),(7,'user1@gmail.com','$2a$10$nVvYv3WGnk2NhIrL.mp9LOg1lORQoP5uxcv9s8ofhwAOPFKRw.93K','2019-06-18 00:00:00'),(8,'user2@gmail.com','$2a$10$0g7xuHZ6MeMzVw8x0F44PeF/7ngpDZaxp4NBDAZWpfDMJ8sBxZ9i.','2019-06-18 00:00:00'),(9,'user3@gmail.com','$2a$10$b9xKiBCNHaXkeS/pYh0hb.eNS2RdDnOMka1mqoAnu8QHecQGXFLCq','2019-06-18 00:00:00'),(10,'user5@gmail.com','$2a$10$ek4VwrA8Yxll1a.Yoc5ZFuu9mfJXEIh03XgZkZJzQflmkszqWWkKe','2019-06-18 00:00:00'),(11,'user6@gmail.com','$2a$10$9AXu5NGyfGX7MKoWjG6x8e5lRy4Av6XWg7p4JMVJt9U5jjq/KOukC','2019-06-23 18:25:56');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -382,7 +383,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (5,3),(6,3),(7,3),(8,3),(5,4);
+INSERT INTO `user_role` VALUES (5,3),(6,3),(7,3),(8,3),(9,3),(10,3),(11,3),(5,4);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -395,4 +396,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-23 17:19:31
+-- Dump completed on 2019-06-26 22:02:01
