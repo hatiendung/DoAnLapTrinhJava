@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/template/head::head"></head>
+
+<head>
+
+	<style type="text/css">
+		.thumb-image {
+			/* width: 200px; */
+			padding: 5px 0px;
+			max-height: 200px;
+			min-height: 200px;
+		}
+
+		.autocomplete-suggestions {
+			background-color: white;
+			color: black;
+			border: 1px solid black;
+			border-top: none;
+		}
+
+		.autocomplete-suggestion {
+			padding: 6px 10px;
+		}
+
+		.autocomplete-suggestion:hover {
+			background-color: #eee;
+			cursor: pointer;
+		}
+
+		.form_search {
+			position: relative;
+		}
+
+		#btnThem {
+			position: absolute;
+			bottom: 0px;
+			right: 0px;
+			font-weight: 500;
+			height: 38px;
+			line-height: 38px;
+			cursor: pointer;
+			background-color: #343a40;
+			padding: 0px 12px;
+			color: white;
+		}
+
+		#btnThemDaoDiem {
+			position: absolute;
+			bottom: 0px;
+			right: 0px;
+			font-weight: 500;
+			height: 38px;
+			line-height: 38px;
+			cursor: pointer;
+			background-color: #343a40;
+			padding: 0px 12px;
+			color: white;
+		}
+
+		.btnXoa {
+			background: #ea1227;
+			border-color: #dc3545;
+			color: white;
+			font-weight: 400;
+		}
+
+		.btn:hover {
+			color: white;
+		}
+
+		#dsdienvien,
+		#dsdaodien {
+			padding: 0px;
+		}
+
+		.option_dienvien {
+			padding: 10px 20px;
+			font-size: 18px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<nav th:replace="admin/template/navbar::navbar"></nav>
+		<aside th:replace="admin/template/aside::aside"></aside>
+
+
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col col-md-12" style="background-color: white;">
+						<h5 style="font-size: 32px; font-weight: 400;">THÊM PHIM MỚI</h5>
+						<form th:action="@{/admin/add-new-film}" method="post" th:object="${movie}"
+							enctype="multipart/form-data">
+							<div class="form-row">
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="newFilm">Tên phim</label> <input th:field="*{nameMovie}" type="text"
+											class="form-control" id="newFilm" aria-describedby="emailHelp"
+											placeholder="Nhập tên phim">
+
+									</div>
+								</div>
+
+
+
+							</div>
+
+							<div class="form-row">
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Trạng thái phim</label>
+										<select th:field="*{status}" class="form-control"
+											id="exampleFormControlSelect1">
+											<option value="0">Sắp chiếu</option>
+											<option value="1">Đang chiếu</option>
+											<option value="2">Hoàn thành</option>
+
+
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Năm sản xuất</label> <select
+											th:field="*{yearProduce}" class="form-control"
+											id="exampleFormControlSelect1">
+											<option value="2019">Năm 2019</option>
+											<option value="2018">Năm 2018</option>
+											<option value="2017">Năm 2017</option>
+											<option value="2016">Năm 2016</option>
+
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Quốc gia sản
+											xuất</label> <select class="form-control" id="exampleFormControlSelect1"
+											name="countryId">
+
+											<option th:each="c : ${countryList}" th:value="${c.idCountry}"
+												th:text="${c.nameCountry}">Viá»‡t
+												Nam</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-row p-2">
+								<fieldset class="border p-2 col-md-12 field_theloaiphim mb-3">
+
+									<legend class="legend-theloaiphim">
+										<label>Thể loại phim</label>
+									</legend>
+									<div class="row">
+										<div th:each="c : ${categorys}" class="col-md-4 mb-3">
+											<div class="custom-control custom-checkbox">
+												<input type="checkbox" name="category" th:value="${c.idCategory}"
+													class="custom-control-input col-md-4 mb-3" th:id="${c.idCategory}">
+												<label class="custom-control-label" th:for="${c.idCategory}"
+													th:text="${c.nameCategory}">Check this custom
+													checkbox</label>
+											</div>
+										</div>
+									</div>
+								</fieldset>
+
+
+							</div>
+
+							<div class="form-row">
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="soTap">Số tập</label> <input type="number" class="form-control"
+											id="soTap" th:field="*{numberEpisodeMovie}" aria-describedby="abc"
+											placeholder="Nhập số tập phim">
+
+									</div>
+								</div>
+
+							</div>
+
+
+							<div class="form-row">
+								<div class="col-md-4 mb-3">
+									<div class="form-group form_search">
+										<label for="tim_kiem_dao_dien">Tìm kiếm đạo diễn</label> <input type="search"
+											id="tim_kiem_dao_dien" class="form-control value_director"
+											placeholder="Tìm kiếm đạo diễn">
+										<div id="btnThemDaoDiem">Thêm đạo diễn</div>
+									</div>
+								</div>
+
+								<div class="col-md-4" id="kq_addDirector">
+									<div class="forn-group">
+										<label for="dsdienvien">Danh đạo sách diễn</label>
+										<select class="custom-select" th:field="*{director}" id="dsdaodien" size="3">
+										</select>
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<div class="form-row">
+								<div class="col-md-4 mb-3">
+									<div class="form-group form_search">
+										<label for="w-input-search">Tìm kiếm diễn viên</label> <input type="text"
+											id="w-input-search" class="form-control value_actor"
+											placeholder="Tìm kiếm diễn viên">
+										<div id="btnThem">Thêm diễn viên</div>
+									</div>
+								</div>
+
+								<div class="col-md-4" id="kq_addActor">
+									<div class="forn-group">
+										<label for="dsdienvien">Danh sách diễn viên</label> <select
+											class="custom-select" th:field="*{actorList}" id="dsdienvien" multiple
+											size="8">
+										</select>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="form-row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="noidungphim">Nội dung phim</label>
+										<textarea placeholder="Nhập nội dung phim" class="form-control"
+											th:field="*{content}" id="noidungphim" rows="8"></textarea>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="imgFile">Ảnh đại diện</label> <input th:field="*{avatar}"
+											type="file" class="form-control-file" name="imgFile" id="fileUploadAvatar">
+
+										<div id="imageAvatar"></div>
+
+									</div>
+								</div>
+
+
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="imgFile">Ảnh slide (Tùy chọn)</label> <input th:field="*{slideImg}"
+											type="file" class="form-control-file" name="imgFile" id="fileUploadSlide">
+										<div id="imageSlide"></div>
+									</div>
+								</div>
+
+
+							</div>
+
+							<button type="submit" class="btn btn-primary mb-3">Thêm
+								phim mới</button>
+						</form>
+
+					</div>
+
+
+				</div>
+
+			</div>
+			<div id="page-wrapper">
+				<footer th:replace="admin/template/footer::footer"></footer>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+
+
+<script th:src="@{/admin/js/jquery.autocomplete.min.js}"></script>
+
+
+
+
+<script>
+	$(document)
+		.ready(
+			function () {
+				$('#tim_kiem_dao_dien')
+					.autocomplete(
+						{
+							serviceUrl: '/api/search-director',
+							paramName: "keyWord",
+							delimiter: ",",
+
+							transformResult: function (data) {
+								return {
+									suggestions: $
+										.map(
+											$
+												.parseJSON(data),
+											function (
+												item) {
+												return {
+													value: item.nameDirector,
+													data: item.idDirector,
+												};
+
+											})
+
+								};
+
+							},
+
+
+							onSelect: function (suggestion) {
+
+								$("#btnThemDaoDiem")
+									.click(function () {
+										$("#dsdaodien").empty();
+										var str = "<option class='option_dienvien' selected value='" + suggestion.data + "'>" + suggestion.value + "</option>"
+										$("#dsdaodien").append(str);
+									});
+
+							}
+
+						});
+
+			});
+</script>
+
+
+
+
+<script>
+	$(document)
+		.ready(
+			function () {
+				var mapDienVien = [];
+				$('#w-input-search')
+					.autocomplete(
+						{
+							serviceUrl: '/api/search-actor',
+							paramName: "keyWord",
+							delimiter: ",",
+
+							transformResult: function (data) {
+								return {
+									suggestions: $
+										.map(
+											$
+												.parseJSON(data),
+											function (
+												item) {
+												return {
+													value: item.nameActor,
+													data: item.idActor,
+												};
+
+											})
+
+								};
+
+							},
+
+							onSelect: function (suggestion) {
+
+								$("#btnThem")
+									.click(
+										function () {
+											var ten = suggestion.value;
+											var check = checkExist(
+												ten,
+												mapDienVien);
+
+											console
+												.log(check);
+											if (check == true) {
+												var dienvien = {
+													ten: suggestion.value,
+													maso: suggestion.data
+												};
+												mapDienVien
+													.push(dienvien);
+												createSelectOption(mapDienVien);
+											}
+
+										});
+
+								function createSelectOption(
+									mapDienVien) {
+									$("#dsdienvien").empty();
+									for (var i = 0; i < mapDienVien.length; i++) {
+										var str = "<option value='" + mapDienVien[i].maso + "' class='option_dienvien' selected id = '" + mapDienVien[i].maso + "'>"
+											+ mapDienVien[i].ten
+											+ "</option>";
+										$("#dsdienvien")
+											.append(str);
+									}
+								}
+
+								function checkExist(ten,
+									mapDienVien) {
+									if (mapDienVien.length < 1) {
+										return true;
+									}
+									for (var i = 0; i < mapDienVien.length; i++) {
+										if (ten === mapDienVien[i].ten) {
+											return false;
+										}
+									}
+									return true;
+								}
+
+							}
+
+						});
+
+			});
+</script>
+
+<script>
+	$(document)
+		.ready(
+			function () {
+				$("#fileUploadAvatar")
+					.on(
+						'change',
+						function () {
+							// Get count of selected files
+							var countFiles = $(this)[0].files.length;
+							var imgPath = $(this)[0].value;
+							var extn = imgPath
+								.substring(
+									imgPath
+										.lastIndexOf('.') + 1)
+								.toLowerCase();
+							var image_holder = $("#imageAvatar");
+							image_holder.empty();
+							if (extn == "gif" || extn == "png"
+								|| extn == "jpg"
+								|| extn == "jpeg") {
+								if (typeof (FileReader) != "undefined") {
+									// loop for each file
+									// selected for uploaded.
+									for (var i = 0; i < countFiles; i++) {
+										var reader = new FileReader();
+										reader.onload = function (
+											e) {
+											$(
+												"<img />",
+												{
+													"src": e.target.result,
+													"class": "thumb-image"
+												})
+												.appendTo(
+													image_holder);
+										}
+										image_holder.show();
+										reader
+											.readAsDataURL($(this)[0].files[i]);
+									}
+								}
+							}
+
+						});
+			});
+</script>
+
+
+
+<script>
+	$(document)
+		.ready(
+			function () {
+				$("#fileUploadSlide")
+					.on(
+						'change',
+						function () {
+							// Get count of selected files
+							var countFiles = $(this)[0].files.length;
+							var imgPath = $(this)[0].value;
+							var extn = imgPath
+								.substring(
+									imgPath
+										.lastIndexOf('.') + 1)
+								.toLowerCase();
+							var image_holder = $("#imageSlide");
+							image_holder.empty();
+							if (extn == "gif" || extn == "png"
+								|| extn == "jpg"
+								|| extn == "jpeg") {
+								if (typeof (FileReader) != "undefined") {
+									// loop for each file
+									// selected for uploaded.
+									for (var i = 0; i < countFiles; i++) {
+										var reader = new FileReader();
+										reader.onload = function (
+											e) {
+											$(
+												"<img />",
+												{
+													"src": e.target.result,
+													"class": "thumb-image"
+												})
+												.appendTo(
+													image_holder);
+										}
+										image_holder.show();
+										reader
+											.readAsDataURL($(this)[0].files[i]);
+									}
+								}
+							}
+
+						});
+			});
+</script>
+
+</html>

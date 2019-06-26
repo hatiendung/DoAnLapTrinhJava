@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/template/head::head"></head>
+
+<body>
+
+	<div id="wrapper">
+		<nav th:replace="admin/template/navbar::navbar"></nav>
+		<aside th:replace="admin/template/aside::aside"></aside>
+
+
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col col-md-12" style="background-color: white;">
+						<h5 style="font-size: 28px; font-weight: 400;">THÊM DIỄN VIÊN/ĐẠO DIỄN</h5>
+						<form th:action="@{/admin/add-new-actor-director}" method="post">
+
+							<div class="form-row">
+
+								<div class="col-md-4 mb-0">
+									<div class="form-group">
+										<label for="newFilm">Tên diễn viên/đạo diễn</label> <input type="text"
+											class="form-control" id="newFilm" name="name"
+											placeholder="Nhập tên diễn viên/đạo diễn">
+
+									</div>
+								</div>
+								<div class="col-md-4 mb-0">
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Chọn diễn viên/đạo diễn</label> <select
+											class="form-control" name="actor_director" id="exampleFormControlSelect1">
+											<option value="1">Diễn viên</option>
+											<option value="2">Đạo diễn</option>
+
+
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-4 mb-0">
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Quốc tịch</label>
+										<select class="form-control" id="exampleFormControlSelect1" name="countryId">
+
+											<option th:each="c : ${countryList}" th:value="${c.idCountry}"
+												th:text="${c.nameCountry}"></option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+
+							<button type="submit" class="btn btn-primary mb-3">Thêm mới</button>
+						</form>
+
+					</div>
+
+
+
+
+
+					<div class="col col-md-12" style="background-color: white;">
+						<h5 style="font-size: 28px; font-weight: 400;">DANH SÁCH DIỄN VIÊN/ĐẠO DIỄN</h5>
+						<p>Danh sách diễn viên</p>
+						<table class="table table-hover table-bordered">
+							<thead class="thead-light">
+								<tr>
+									<th scope="col">STT</th>
+									<th scope="col">Tên diễn viên</th>
+									<th scope="col">Quốc tịch</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="actor , itrStat : ${actorList}">
+									<th th:text="${itrStat.index + 1}" scope="row">1</th>
+									<td th:text="${actor.nameActor}">Mark</td>
+									<td th:text="${actor.country.nameCountry}">Otto</td>
+								</tr>
+
+							</tbody>
+						</table>
+
+
+						<p>Danh sách đạo diễn</p>
+						<table class="table table-hover table-bordered">
+							<thead class="thead-light">
+								<tr>
+									<th scope="col">STT</th>
+									<th scope="col">Tên diễn viên</th>
+									<th scope="col">Quốc tịch</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="director , itrStat : ${directorList}">
+									<th th:text="${itrStat.index + 1}" scope="row">1</th>
+									<td th:text="${director.nameDirector}">Mark</td>
+									<td th:text="${director.country.nameCountry}">Otto</td>
+								</tr>
+
+							</tbody>
+						</table>
+
+					</div>
+
+
+				</div>
+
+			</div>
+			<div id="page-wrapper">
+				<footer th:replace="admin/template/footer::footer"></footer>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+</html>

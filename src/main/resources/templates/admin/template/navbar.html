@@ -1,0 +1,34 @@
+<nav xmlns:th="http://www.thymeleaf.org" th:fragment="navbar"
+	class="fixed-top navbar navbar-default navbar-static-top m-b-0"
+	style="padding: 0px">
+	<div class="navbar-header">
+		<div
+			class="top-left-part d-flex justify-content-center align-items-center">
+			<!-- Logo -->
+			<a class="logo" style="padding: 0px;" th:href="@{/admin}"> <!-- Logo icon image, you can use font-icon also -->
+				<img th:src="@{/images/logo/motphim.png}" width="160px" />
+			</a>
+		</div>
+		<!-- /Logo -->
+		<ul class="nav navbar-top-links navbar-right pull-right">
+			<li>
+				<form th:action="@{/admin/tim-kiem-phim/}" role="search"
+					method="post" class="app-search hidden-sm hidden-xs m-r-10">
+					<input type="search" placeholder="Tìm kiếm phim" name="keyWord"
+						class="form-control">
+					<button type="submit"
+						style="background: black; border: none; margin-left: -33px; background: #ebebec; border-radius: 10px;">
+						<i class="fa fa-search" style="color: black;"></i>
+					</button>
+				</form>
+			</li>
+
+
+			<li><a class="profile-pic" th:href="@{/admin}"> <img
+					th:src="@{/admin/images/users/varun.jpg}" alt="user-img" width="36"
+					class="img-circle" style="border-radius: 20px;"><b class="hidden-xs">ADMIN</b></a></li>
+
+
+		</ul>
+	</div>
+</nav>

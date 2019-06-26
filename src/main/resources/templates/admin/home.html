@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/template/head::head"></head>
+<body>
+
+	<div id="wrapper">
+		<nav th:replace="admin/template/navbar::navbar"></nav>
+		<aside th:replace="admin/template/aside::aside"></aside>
+
+
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<div class="row p-2 home_page">
+					<div class="col col-md-4">
+						<div class="card mb-3">
+							<div class="card-body">
+								<a th:href="@{/admin/danh-sach-phim}" class="card-title" th:text="'TỔNG SỐ PHIM ' + ${totalMovie}"></a>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col col-md-4">
+						<div class="card mb-3">
+							<div class="card-body">
+								<a href="#" class="card-title" th:text="'TỔNG SỐ TẬP PHIM ' + ${totalEpisode}"></a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+			<div id="page-wrapper">
+				<footer th:replace="admin/template/footer::footer"></footer>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

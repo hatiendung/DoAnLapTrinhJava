@@ -1,0 +1,51 @@
+<div  xmlns:th="http://www.thymeleaf.org" th:fragment="sidebar">
+
+	<h4 class="my-3">FACEBOOK</h4>
+	<div class="row">
+		<div class="col col-md-12">
+			<a href="https://www.facebook.com/hatiendung69"> <img
+				class="img-fluid"
+				src="http://bilutv.org/upload/images/2019/04/ngoi-sao-sang-nhat-bau-troi-dem-2019_1554826908-slider.jpg"
+				alt="">
+
+			</a>
+		</div>
+	</div>
+
+	<h4 class="my-3">PHIM SẮP CHIẾU</h4>
+	<div class="row">
+		<div class="col-12">
+			<ul class="list-unstyled">
+				<li class="media mb-3" th:each="movie : ${listMovieSC}"><a
+					th:href="@{/phim/}+${movie.linkMovie}"> <img
+						style="width: 75px; height: 87px;"
+						th:src="@{/images/movie/}+${movie.linkMovie}+.jpg"
+						th:alt="${movie.nameMovie}">
+				</a>
+					<div class="media-body ml-3">
+						<a th:href="@{/phim/}+${movie.linkMovie}"><span
+							th:text="${movie.nameMovie}"></span></a> <br> <span
+							th:text="${movie.yearProduce}"></span> <br> <i
+							class="fas fa-star" style="color: #f1a700;"></i> <i
+							class="fas fa-star" style="color: #f1a700;"></i> <i
+							class="fas fa-star" style="color: #f1a700;"></i> <i
+							class="fas fa-star" style="color: #f1a700;"></i>
+
+					</div></li>
+
+			</ul>
+		</div>
+	</div>
+
+
+	<h4 class="my-3">PHIM ĐƯỢC TÌM KIẾM NHẤT</h4>
+	<div class="row">
+		<div class="col col-md-12">
+			<a href=""> <img class="img-fluid"
+				src="http://bilutv.org/upload/images/2019/04/ngoi-sao-sang-nhat-bau-troi-dem-2019_1554826908-slider.jpg"
+				alt="">
+
+			</a>
+		</div>
+	</div>
+</div>

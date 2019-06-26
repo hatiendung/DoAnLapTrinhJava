@@ -1,0 +1,206 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="aside"
+	class="navbar-default sidebar" role="navigation">
+	<div class="sidebar-nav slimscrollsidebar">
+		<div style="height: 60px; color: white;"
+			class="d-flex justify-content-center align-items-center">
+			<a th:href="@{/admin}"> <img th:src="@{/images/logo/motphim.png}"
+				width="160px" />
+			</a>
+		</div>
+		<ul class="nav" id="side-menu" style="border-top: 1px solid #454d55;">
+
+			<li style="padding: 0px 0 0;" id="cl0">
+				<div>
+					<a th:href="@{/admin}" class="waves-effect"><i
+						class="fa fa-info-circle fa-fw" aria-hidden="true"></i>DASHBOARD</a>
+				</div>
+			</li>
+
+
+			<li style="padding: 0px 0 0;" id="cl1">
+				<div id="heading1">
+					<a href="#" class="waves-effect cl1" data-toggle="collapse"
+						data-target="#collapse1" aria-expanded="false"
+						aria-controls="collapse1"> <i class="fa fa-clock-o fa-fw"
+						aria-hidden="true"></i>QUẢN LÝ PHIM
+					</a>
+					<div id="collapse1" class="collapse" aria-labelledby="#heading1"
+						data-parent="#cl1">
+						<div class="card-body m-0 p-0 qlp d-flex align-items-center">
+							<ul class="nav submenu" id="side-menu">
+								<li style="padding: 0px 0 0;">
+									<div>
+
+										<a th:href="@{/admin/danh-sach-phim}" class="waves-effect">
+											<i class="fa fa-chevron-circle-right"></i> Xem danh sách phim
+										</a>
+									</div>
+								</li>
+								<li style="padding: 0px 0 0;">
+									<div>
+										<a th:href="@{/admin/them-phim-moi}" class="waves-effect"><i
+											class="fa fa-chevron-circle-right"></i> Thêm phim mới</a>
+									</div>
+								</li>
+
+							</ul>
+
+						</div>
+					</div>
+
+				</div>
+			</li>
+
+			<li style="padding: 0px 0 0;" id="cl2">
+				<div id="heading2">
+					<a href="#" class="waves-effect" data-toggle="collapse"
+						data-target="#collapse2" aria-expanded="false"
+						aria-controls="collapse2"> <i class="fa fa-table fa-fw"
+						aria-hidden="true"></i>QUẢN LÝ SLIDE ẢNH
+					</a>
+					<div id="collapse2" class="collapse" aria-labelledby="#heading2"
+						data-parent="#cl2">
+
+						<ul class="nav submenu" id="side-menu">
+							<li style="padding: 0px 0 0;">
+								<div>
+									<a th:href="@{/admin/danh-sach-slide}" class="waves-effect"><i
+										class="fa fa-chevron-circle-right"></i> Xem danh sách slide</a>
+								</div>
+							</li>
+
+
+						</ul>
+					</div>
+				</div>
+			</li>
+
+
+
+
+
+			<li style="padding: 0px 0 0;" id="cl7">
+				<div id="heading7">
+					<a href="#" class="waves-effect" data-toggle="collapse"
+						data-target="#collapse7" aria-expanded="false"
+						aria-controls="collapse7"> <i class="fa fa-user fa-fw"
+						aria-hidden="true"></i>QUẢN LÝ USER
+					</a>
+					<div id="collapse7" class="collapse" aria-labelledby="#heading7"
+						data-parent="#cl7">
+
+						<ul class="nav submenu" id="side-menu">
+							<li style="padding: 0px 0 0;">
+								<div>
+									<a th:href="@{/admin/danh-sach-user}" class="waves-effect"><i
+										class="fa fa-chevron-circle-right"></i> Xem danh sách user</a>
+								</div>
+							</li>
+
+
+						</ul>
+					</div>
+				</div>
+			</li>
+
+
+
+
+
+
+
+
+
+
+			<li>
+				<div>
+					<a th:href="@{/admin/actor-director}" class="waves-effect"><i
+						class="fa fa-info-circle fa-fw" aria-hidden="true"></i>DIỄN
+						VIÊN/ĐẠO DIỄN</a>
+				</div>
+			</li>
+
+
+
+
+			<li style="padding: 0px 0 0;" id="cl3">
+				<div id="heading3">
+					<a href="index.html" class="waves-effect" data-toggle="collapse"
+						data-target="#collapse3" aria-expanded="false"
+						aria-controls="collapse3"> <i class="fa fa-table fa-fw"
+						aria-hidden="true"></i>Basic Table
+					</a>
+					<div style="padding: 0px" id="collapse3" class="collapse"
+						aria-labelledby="#heading3" data-parent="#cl3">
+						<div class="card-body">
+							Ad vegan excepteur <br> Leggings occaecat <br> probably
+							haven't
+						</div>
+					</div>
+			</li>
+
+			<li style="padding: 0px 0 0;" id="cl4">
+				<div id="heading4">
+					<a href="index.html" class="waves-effect" data-toggle="collapse"
+						data-target="#collapse4" aria-expanded="false"
+						aria-controls="collapse4"> <i class="fa fa-font fa-fw"
+						aria-hidden="true"></i>Icons
+					</a>
+					<div style="padding: 0px" id="collapse4" class="collapse"
+						aria-labelledby="#heading4" data-parent="#cl4">
+						<div class="card-body">
+							Ad vegan excepteur <br> Leggings occaecat <br> probably
+							haven't
+						</div>
+					</div>
+			</li>
+			<li style="padding: 0px 0 0;" id="cl5">
+				<div id="heading5">
+					<a href="index.html" class="waves-effect" data-toggle="collapse"
+						data-target="#collapse5" aria-expanded="false"
+						aria-controls="collapse5"><i class="fa fa-globe fa-fw"
+						aria-hidden="true"></i>Google Map </a>
+					<div style="padding: 0px" id="collapse5" class="collapse"
+						aria-labelledby="#heading5" data-parent="#cl5">
+						<div class="card-body">
+							Ad vegan excepteur <br> Leggings occaecat <br> probably
+							haven't
+						</div>
+					</div>
+			</li>
+			<li style="padding: 0px 0 0;" id="cl6">
+				<div id="heading6">
+					<a href="index.html" class="waves-effect" data-toggle="collapse"
+						data-target="#collapse6" aria-expanded="false"
+						aria-controls="collapse6"><i class="fa fa-columns fa-fw"
+						aria-hidden="true"></i>Blank Page </a>
+					<div style="padding: 0px" id="collapse6" class="collapse"
+						aria-labelledby="#heading6" data-parent="#cl6">
+						<div class="card-body">
+							Ad vegan excepteur <br> Leggings occaecat <br> probably
+							haven't
+						</div>
+					</div>
+			</li>
+
+			<li>
+				<div>
+					<a th:href="@{/user}" class="waves-effect"><i
+						class="fa fa-info-circle fa-fw" aria-hidden="true"></i>TRỞ VỀ
+						WEBSITE</a>
+				</div>
+			</li>
+
+
+			<li>
+				<div>
+					<a th:href="@{/logout}" class="waves-effect"><i
+						class="fa fa-info-circle fa-fw" aria-hidden="true"></i>ĐĂNG XUẤT</a>
+				</div>
+			</li>
+
+		</ul>
+
+	</div>
+
+</div>

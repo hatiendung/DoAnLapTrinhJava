@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="web/template/head::head"></head>
+
+
+<body>
+    <nav th:replace="web/template/menu::menu"></nav>
+
+    <header>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" th:each="slide, itrStat : ${slides}" th:data-slide-to="${itrStat.index}" th:classappend="${itrStat.index <= 0} ? 'active' : ''"></li>
+
+            </ol>
+            <div class="carousel-inner" role="listbox" style="cursor: pointer;">
+                <div th:each="slide, itrStat : ${slides}" class="carousel-item" th:classappend="${itrStat.index <= 0} ? 'active' : ''" th:style=" 'background-image: url('+@{/images/slide/} + ${slide.linkImage} +'.jpg);'" th:href="@{/phim/} + ${slide.movie.linkMovie}"
+                    th:onclick="'window.location.href = \'' + @{/phim/{link}(link=${slide.movie.linkMovie})} + '\''">
+
+                </div>
+
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+    </header>
+
+
+
+    <div class="container">
+        <div class="row content_home">
+            <div class="col col-md-9">
+                <h4 class="my-3">PHIM MỚI CẬP NHẬT</h4>
+                <div class="row">
+                    <div th:each="movie : ${movieList}" class="col-lg-3 mb-4">
+                        <div class="card" style="cursor: pointer;" th:title="${movie.nameMovie}">
+                            <div class="card-body img_movie">
+                                <div class="text_block">
+                                    <p class="mx-1 my-2" th:if="${#lists.size(movie.episodeSeriesList) == 0}" th:text="'Tập 0/' + ${movie.numberEpisodeMovie}">Tập 22 Vietsub
+                                    </p>
+                                    <p class="mx-1 my-2" th:if="${#lists.size(movie.episodeSeriesList) > 0}" th:text="'Tập ' + ${#lists.size(movie.episodeSeriesList)} + '/' + ${movie.numberEpisodeMovie}">Tập 22 Vietsub
+                                    </p>
+
+                                </div>
+                                <a th:href="@{/phim/}+${movie.linkMovie}"> <img width="200px" height="284px" th:src="@{/images/movie/}+${movie.LinkMovie}+.jpg" th:alt="${movie.nameMovie}">
+                                </a>
+
+                                <div class="card-footer text-center">
+                                    <a style="text-decoration: none; margin-top: 10px; font-weight: 400; color: #f06402;" th:href="@{/phim/}+${movie.linkMovie}"> <span th:text="${movie.nameMovie}"></span>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <h4 class="mb-3">PHIM ĐƯỢC XEM NHIỀU NHẤT</h4>
+                <div class="row">
+                    <div th:each="movie : ${movieListOrderByView}" class="col-lg-3 mb-4">
+                        <div class="card" style="cursor: pointer;" th:title="${movie.nameMovie}">
+                            <div class="card-body img_movie">
+                                <div class="text_block">
+                                    <p class="mx-1 my-2" th:if="${#lists.size(movie.episodeSeriesList) == 0}" th:text="'Tập 0/' + ${movie.numberEpisodeMovie}">Tập 22 Vietsub
+                                    </p>
+                                    <p class="mx-1 my-2" th:if="${#lists.size(movie.episodeSeriesList) > 0}" th:text="'Tập ' + ${#lists.size(movie.episodeSeriesList)} + '/' + ${movie.numberEpisodeMovie}">Tập 22 Vietsub
+                                    </p>
+
+                                </div>
+                                <a th:href="@{/phim/}+${movie.linkMovie}"> <img width="200px" height="284px" th:src="@{/images/movie/}+${movie.LinkMovie}+.jpg" th:alt="${movie.nameMovie}">
+                                </a>
+                                <div class="card-footer text-center">
+                                    <a style="text-decoration: none; margin-top: 10px;" th:href="@{/phim/}+${movie.linkMovie}"> <span th:text="${movie.nameMovie}"></span>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md-3">
+                <div th:replace="web/template/sidebar::sidebar"></div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="web/template/footer::footer"></footer>
+
+</body>
+
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="web/template/head::head"></head>
+
+<body>
+    <nav th:replace="web/template/menu::menu"></nav>
+    <div class="container"></div>
+
+    <div class="container">
+        <div class="row content">
+            <div class="col col-md-9 my-3">
+                <div class="row">
+                    <div class="col col-md-5">
+                        <div class="card"
+                            style="border: none; background-color: black; width: 324.26px; cursor: pointer;"
+                            th:title="${movie.nameMovie}">
+                            <div class="card-body">
+                                <a th:if="${#lists.size(movie.episodeSeriesList) == 0}" class="disabled"> <img width="324.26px" th:src="@{/images/movie/}+${movie.linkMovie}+.jpg" th:alt="${movie.nameMovie}">
+                                </a>
+                                <a th:if="${#lists.size(movie.episodeSeriesList) > 0}" th:href="@{/xem-phim/}+${movie.episodeSeriesList[0].linkEpisode}">
+                                    <img width="324.26px" th:src="@{/images/movie/}+${movie.linkMovie}+.jpg" th:alt="${movie.nameMovie}">
+                                </a>
+                            </div>
+                            <div class="d-flex justify-content-around card-footer text-white">
+                                <!-- phim chua co trailer -->
+                                <a th:if="${#lists.size(movie.trailerList) == 0}" class="btn btn-secondary null_trailer">Xem trailer</a>
+
+
+
+                                <!-- phim da co trailer -->
+                                <a th:if="${#lists.size(movie.trailerList) > 0}" th:href="@{/xem-trailer/} + ${movie.trailerList[0].linkTrailer}" class="btn btn-secondary">Xem trailer</a>
+
+
+
+                                <!-- phim chua co tap  -->
+
+                                <a th:if="${#lists.size(movie.episodeSeriesList) == 0}" class="btn btn-success null_movie">Xem phim</a>
+
+                                <!-- phim da co tap -->
+                                <a th:if="${#lists.size(movie.episodeSeriesList) > 0}" th:href="@{/xem-phim/}+${movie.episodeSeriesList[0].linkEpisode}" class="btn btn-success">Xem phim</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-7 mo_ta_phim">
+                        <h4 th:text="${#strings.toUpperCase(movie.nameMovie)} "></h4>
+
+                        
+                        <div class="card border-0 border-white">
+                            <div class="card-body trang_thai">
+                                <p>
+                                    Trạng thái: <span>Full 55/55 Vietsub</span>
+                                </p>
+                                <p>
+                                    Lượt xem: <span th:text=" ${movie.view}"></span>
+                                </p>
+                                <p>
+                                    Đạo diễn: <span th:text="${movie.director.nameDirector}">Trịnh Vĩ Văn</span>
+                                </p>
+                                <p>
+                                    Thời lượng: <span>45 phút / tập</span>
+                                </p>
+                                <p>
+                                    Số tập: <span th:text="${movie.numberEpisodeMovie}"></span>
+                                </p>
+                                <p>
+                                    Tình trạng: <span th:if=" ${movie.status ==0}">Sắp chiếu</span>
+                                    <span th:if=" ${movie.status ==1}">Đang chiếu</span> <span th:if=" ${movie.status ==2}">Hoàn thành</span>
+                                </p>
+                                <p>
+                                    Ngôn ngữ: <span>Phụ đề Việt + Lồng tiếng</span>
+                                </p>
+                                <p>
+                                    Năm sản xuất: <span th:text="${movie.yearProduce}"></span>
+                                </p>
+                                <p class="quoc-gia">
+                                    Quốc gia sản xuất:
+                                    <a th:href="@{/quoc-gia/} + ${movie.country.codeCountry}" th:text=" ' ' + ${movie.country.nameCountry} "> </a>
+                                </p>
+                                <p class="the-loai">
+                                    Thể loại: <span th:each="category, itrStat : ${movie.categoryList}"> <a
+										th:href="@{/the-loai/} + ${category.codeCategory}"
+										th:if="${itrStat.index} <= ${#lists.size(movie.categoryList) - 1} "
+										th:text="${category.nameCategory}">the loai</a> <span
+										th:if="${itrStat.index} < ${#lists.size(movie.categoryList)-1} "
+										th:text="', '">the loai</span>
+                                    </span>
+
+                                </p>
+                                <p class="dien-vien">
+                                    Diễn viên: <span th:each="actor, itrStat : ${movie.actorList} ">
+										<a th:href="@{/dien-vien/} + ${actor.codeActor}"
+										th:if="${itrStat.index} <= ${#lists.size(movie.actorList) - 1} "
+										th:text="${actor.nameActor}">dien vien</a> <span
+										th:if="${itrStat.index} < ${#lists.size(movie.actorList)-1} "
+										th:text="', '">dien vien</span>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row" id="row_kq">
+                    <div class="col col-md-12">
+
+                        <div class="card border-0 border-white tom_tat_phim">
+                            <div id="kq"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row" id="row_kq_null_trailer">
+                    <div class="col col-md-12">
+
+                        <div class="card border-0 border-white tom_tat_phim">
+                            <div id="kq_null_trailer"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row my-3">
+                    <div class="col col-md-12">
+
+                        <div class="card border-0 border-white tom_tat_phim">
+                            <h5>TÓM TẮT NỘI DUNG PHIM</h5>
+                            <p th:text="${movie.content}"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col col-md-3">
+                <div th:replace="web/template/sidebar::sidebar"></div>
+            </div>
+        </div>
+    </div>
+    <footer th:replace="web/template/footer::footer"></footer>
+</body>
+
+
+<script type="text/javascript">
+    $(document)
+        .ready(
+            function () {
+                $(".null_movie").click(function () {
+                    $("#row_kq").addClass("my-3");
+                    $("#kq")
+                        .append(
+                            "<h5>THÔNG BÁO</h5><p>Hiện tại phim chưa có tập nào. Chúng tôi sẽ cập nhật nhanh nhất khi phim ra tập mới</p>");
+                    $(".null_movie").addClass(
+                        "disabled");
+
+                });
+
+                $(".null_trailer").click(function () {
+                    $("#row_kq_null_trailer").addClass("my-3");
+                    $("#kq_null_trailer")
+                        .append(
+                            "<h5>THÔNG BÁO</h5><p>Hiện tại phim chưa có trailer nào. Chúng tôi sẽ cập nhật nhanh nhất khi phim ra trailer mới</p>");
+                    $(".null_trailer").addClass(
+                        "disabled");
+
+                });
+
+            });
+</script>
+
+</html>

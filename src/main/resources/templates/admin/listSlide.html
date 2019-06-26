@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/template/head::head"></head>
+<head>
+<script th:src="@{/admin/js/jquery-3.4.1.js}"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		$(".rdCheck").click(function() {
+			var id = $(this).attr('id');
+			var status = $("#" + id).val();
+			var idSlide = id;
+			var idStatus = parseInt(status);
+
+			$.get("/api/ajax/idSlide/" + idSlide, function(data, status) {
+				if (status) {
+					if (idStatus == 1) {
+						$("#" + id).val(0);
+						$("#lb" + id).text("Không hiển thị");
+					}
+					if (idStatus == 0) {
+						$("#" + id).val(1);
+						$("#lb" + id).text("Hiển thị");
+					}
+				}
+			});
+
+		});
+	});
+</script>
+
+</head>
+
+
+
+
+
+<body>
+
+	<div id="wrapper">
+		<nav th:replace="admin/template/navbar::navbar"></nav>
+		<aside th:replace="admin/template/aside::aside"></aside>
+
+
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<div class="row p-0">
+
+					<div class="col col-md-12 p-0">
+
+						<table class="table table-hover table-striped table-bordered">
+							<thead class="thead-dark">
+								<tr>
+									<th>STT</th>
+									<th>Ảnh đại diện</th>
+									<th>Cập nhật</th>
+
+									<th>Trạng thái</th>
+									<th>Xóa slide ảnh</th>
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="slide, itrStat:${listSlide}">
+
+									<td style="vertical-align: middle;"
+										th:text="${itrStat.index + 1}"></td>
+									<td style="vertical-align: middle;"><img alt="slide áº£nh"
+										th:src="@{/images/slide/}+${slide.linkImage}+.jpg"
+										width="200px" /></td>
+									<td style="vertical-align: middle;">Cập nhật</td>
+
+									<td style="vertical-align: middle;">
+
+										<div class="custom-control custom-switch">
+											<div th:if="${slide.status == 1}">
+												<input type="checkbox" class="custom-control-input rdCheck"
+													name="abcd" checked="checked" th:id="${slide.idSlide}"
+													th:value="${slide.status}"> <label
+													th:id="'lb'+${slide.idSlide}" class="custom-control-label"
+													th:for="${slide.idSlide}">Hiện thị</label>
+												<div id="kq"></div>
+											</div>
+											<div th:if="${slide.status == 0}">
+												<input type="checkbox" class="custom-control-input rdCheck"
+													name="abcd" th:id="${slide.idSlide}"
+													th:value="${slide.status}"> <label
+													th:id="'lb'+${slide.idSlide}" class="custom-control-label"
+													th:for="${slide.idSlide}">Không hiển thị</label>
+
+												<div id="kq"></div>
+											</div>
+
+
+										</div>
+
+									</td>
+
+									<td style="vertical-align: middle;"><a
+										th:href="@{/admin/xoa-slide/} + ${slide.idSlide}"
+										class="btn btn-danger">Xóa</a></td>
+
+
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+			<div id="page-wrapper">
+				<footer th:replace="admin/template/footer::footer"></footer>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

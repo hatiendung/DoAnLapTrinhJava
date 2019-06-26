@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="web/template/head::head"></head>
+
+<head>
+
+<style type="text/css">
+.download_phim {
+	background: #ff9601;
+	color: white;
+	font-weight: bold;
+	font-size: 17px;
+	border-radius: 0px;
+}
+
+.download_phim:hover {
+	color: white;
+}
+
+.alert_download {
+	border: 1.5px solid #ff9601;
+	padding: 5px 15px;
+}
+</style>
+</head>
+
+<body>
+	<nav th:replace="web/template/menu::menu"></nav>
+	<div class="container"></div>
+
+	<div class="container">
+		<div class="row">
+			<div class="col col-md-12">
+				<div class="d-flex flex-row-reverse bd-highlight">
+					<div class="p-2 bd-highlight">
+					<!-- user da dang nhap -->
+						<a th:if="${#request.userPrincipal != null}" role="button"
+							class="btn download_phim" th:id="${trailer.linkTrailer}"
+							title="Tải phim"
+							th:href="@{/user/download-trailer/} + ${trailer.linkTrailer}">Tải
+							Trailer <i class="fas fa-download"></i>
+						</a> 
+						<!-- user chua dang nhap -->
+						<a th:if="${#request.userPrincipal == null}" role="button"
+							class="btn download_phim" id="" title="Tải phim">Tải Trailer <i
+							class="fas fa-download"></i>
+						</a>
+
+					</div>
+
+				</div>
+			</div>
+
+
+			<div class="col col-md-12 mb-2">
+
+				<div id="kq"></div>
+
+			</div>
+
+			<div class="col col-md-12">
+				<video th:src="@{/video/trailer/}+${trailer.linkTrailer}+ '.mp4'"
+					width="100%" controls></video>
+			</div>
+		</div>
+		<div class="row">
+			<h4 class="my-3 ml-3" th:text="${title}">PHIM MỚI CẬP NHẬT</h4>
+
+			<div class="col col-md-12">
+				<div class="d-flex flex-wrap">
+
+
+					<div th:each="trailers, itrStat:  ${movie.trailerList}">
+						<a
+							th:classappend="${trailer.linkTrailer}  == ${trailers.linkTrailer} ? 'list-group-item mr-3 mb-3 tapphim tapphim_active' : 'list-group-item mr-3 mb-3 tapphim' "
+							th:href="@{/xem-trailer/} + ${trailers.linkTrailer}"
+							th:text="'Trailer ' + ${trailers.ordinalNumbers}"> </a>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="row">
+			<div class="col col-md-12">
+				<div id="disqus_thread" class="bg-white my-2 px-3"></div>
+
+			</div>
+		</div>
+	</div>
+	<footer th:replace="web/template/footer::footer"></footer>
+
+</body>
+
+
+<script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+
+						$(".download_phim")
+								.click(
+										function() {
+											var linkEpisode = $(this)
+													.attr('id');
+											if (linkEpisode != "") {
+
+											} else {
+												$("#kq")
+														.append(
+																"<p class='my-2 alert_download'>Bạn phải đăng nhập mới có thể tải trailer phim</p>");
+												$(".download_phim").addClass(
+														"disabled");
+											}
+
+										});
+					});
+</script>
+
+
+<script>
+	var disqus_config = function() {
+		var PAGE_URL = "https://disqus.com/";
+		var PAGE_IDENTIFIER = "";
+		this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+		this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+	};
+
+	(function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+		s.src = 'https://webxemphim-com.disqus.com/embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	})();
+</script>
+<noscript>
+	Please enable JavaScript to view the <a
+		href="https://disqus.com/?ref_noscript">comments powered by
+		Disqus.</a>
+</noscript>
+
+</html>

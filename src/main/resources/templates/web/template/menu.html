@@ -1,0 +1,206 @@
+<nav xmlns:th="http://www.thymeleaf.org"
+	class="navbar navbar-expand-lg menu" th:fragment="menu">
+	<div class="container">
+
+		<a class="navbar-brand" th:href="@{/}"> <img
+			th:src="@{/images/logo/motphim.png}" />
+		</a>
+		<button class="navbar-toggler navbar-toggler-right" type="button"
+			data-toggle="collapse" data-target="#navbarResponsive"
+			aria-controls="navbarResponsive" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						THỂ LOẠI</a>
+					<div class="dropdown-menu dropdown-menu-left"
+						aria-labelledby="navbarDropdownBlog">
+						<a th:each="category : ${categoryList}" class="dropdown-item"
+							th:href="@{/the-loai/}+${category.codeCategory}"
+							th:text="${category.nameCategory}">THE LOẠI</a>
+
+					</div></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						QUỐC GIA </a>
+					<div class="dropdown-menu dropdown-menu-left"
+						aria-labelledby="navbarDropdownBlog">
+						<a th:each="country : ${countryList}" class="dropdown-item"
+							th:href="@{/quoc-gia/} +${country.codeCountry}"
+							th:text="${country.nameCountry}">Viet NAM </a>
+					</div></li>
+
+
+
+
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						PHIM MỚI</a>
+					<div class="dropdown-menu dropdown-menu-left nam_sx"
+						aria-labelledby="navbarDropdownBlog"></div></li>
+
+
+
+
+				<!-- Dang nhap -->
+				<div class="modal fade" id="exampleModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content text-dark">
+							<div class="modal-header">
+								<h5 style="padding-left: 120px;" class="modal-title "
+									id="exampleModalLabel">Đăng nhập tài khoản</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+
+								<form th:action="@{/dang-nhap}" method="post">
+
+									<div class="form-group">
+										<label for="emaildangnhap">Email</label> <input type="text"
+											name="email" class="form-control" id="emaildangnhap"
+											placeholder="Nhập email">
+
+									</div>
+									<div class="form-group">
+										<div>
+											<label for="exampleInputPassword1">Mật khẩu</label> <input
+												type="password" class="form-control" name="password"
+												id="exampleInputPassword1" placeholder="Nhập mật khẩu">
+										</div>
+										<a href="#" class="text-primary mt-2">Quyên mật khẩu</a>
+									</div>
+
+
+									<div class="form-group d-flex justify-content-center">
+										<button type="submit" class="btn btn-primary btn-lg w-100">Đăng
+											nhập</button>
+									</div>
+
+									<div class="form-group d-flex justify-content-center">
+										<a href="#" data-toggle="modal" data-target="#mdRegister"
+											class="text-primary text-center">Đăng ký tài khoản</a>
+									</div>
+
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<!-- dang ky -->
+				<div class="modal fade" id="mdRegister" tabindex="-1" role="dialog"
+					aria-labelledby="mdRegisterLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content text-dark">
+							<div class="modal-header">
+								<h5 style="padding-left: 120px;" class="modal-title "
+									id="mdRegisterLabel">Đăng ký tài khoản</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+
+								<form th:action="@{/dang-ky-tai-khoan}" method="post">
+
+									<div class="form-group">
+										<label for="exampleInputEmail1">Email</label> <input
+											type="text" name="emailRegister" class="form-control"
+											id="exampleInputEmail1" placeholder="Nhập email">
+
+									</div>
+									<div class="form-group">
+										<div>
+											<label for="pswod">Mật khẩu</label> <input
+												type="password" class="form-control" name="passwordRegister"
+												id="pswod" placeholder="Nhập mật khẩu">
+										</div>
+
+									</div>
+
+									<div class="form-group">
+										<div>
+											<label for="exampleconfirm">Nhập lại mật khẩu</label> <input
+												type="password" class="form-control" name="password"
+												id="exampleconfirm" placeholder="Nhập lại mật khẩu">
+										</div>
+
+									</div>
+
+
+									<div class="form-group d-flex justify-content-center">
+										<button type="submit" class="btn btn-primary btn-lg w-100">Đăng
+											ký tài khoản</button>
+									</div>
+
+									<div class="form-group d-flex justify-content-center">
+										<a href="#" data-toggle="modal" data-target="#exampleModal"
+											class="text-primary text-center">Đăng nhập</a>
+									</div>
+
+
+								</form>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+				<li class="nav-item">
+					<form class="form-inline my-2 my-lg-0"
+						th:action="@{/tim-kiem-phim/}" method="post">
+						<input class="form-control" name="keyWord" type="search"
+							placeholder="Tìm kiếm" aria-label="Search" th:value="${keyWord}">
+						<button class="btn btn-outline-light my-2 my-sm-0"
+							title="Tìm kiếm" type="submit">
+							<i class="fas fa-search"></i>
+						</button>
+					</form>
+				</li>
+
+
+
+
+
+
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+					title="Đăng nhập/Đăng xuất"><i class="fas fa-sign-in-alt"></i>
+				</a>
+					<div class="dropdown-menu dropdown-menu-left"
+						aria-labelledby="navbarDropdownBlog">
+						<a th:if="${#request.isUserInRole('ADMIN')}" class="dropdown-item"
+							th:href="@{/admin}">Admin</a> <a
+							th:if="${#request.userPrincipal != null}" class="dropdown-item"
+							th:href="@{/dang-xuat}">Đăng xuất </a> <a
+							th:if="${#request.userPrincipal == null}" class="dropdown-item"
+							data-toggle="modal" data-target="#exampleModal" href="#">Đăng
+							nhập</a>
+					</div></li>
+			</ul>
+
+
+		</div>
+
+
+
+
+	</div>
+
+</nav>

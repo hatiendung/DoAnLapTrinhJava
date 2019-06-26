@@ -1,0 +1,165 @@
+/*!
+ * Start Bootstrap - Modern Business (https://startbootstrap.com/template-overviews/modern-business)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-logomodern-business-nav/blob/master/LICENSE)
+ */
+.carousel-item {
+	height: 65vh;
+	min-height: 300px;
+	background: no-repeat center center scroll;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.portfolio-item {
+	margin-bottom: 30px;
+}
+
+body {
+	background-color: #111;
+	color: white;
+}
+
+.card, .card-body {
+	padding: 0px;
+	margin: 0px;
+}
+
+.content_home .card {
+	border: none;
+	background-color: black;
+	width: 200px;
+}
+/* .content .card-body{
+	height: 280px;
+
+} */
+.content_home .card-footer {
+	padding: 0px;
+	height: 55px;
+}
+
+.content .card-footer:last-child {
+	border: none;
+}
+
+.mo_ta_phim p {
+	margin: 3px 10px;
+}
+
+.trang_thai, .tom_tat_phim {
+	background-color: #222;
+	color: #bbb;
+}
+
+.trang_thai, .tom_tat_phim p, h5 {
+	padding-left: 10px;
+}
+
+h4 {
+	color: #ff9601;
+	font-weight: 300;
+}
+
+.nav-link {
+	color: white;
+	/* font-weight: bold; */
+}
+
+.menu, footer {
+	background-color: black;
+	padding: 0px;
+}
+
+.menu .nav-link:hover {
+	color: #ff9601;
+}
+
+footer h5 {
+	color: #ff9601;
+	font-weight: 300;
+	padding: 0px;
+}
+
+
+
+.content_home a:hover {
+	color: #f06402;
+}
+
+a, a:hover {
+	color: #f06402;
+	font-weight: 400;
+	text-decoration: none;
+	font-size: 18px;
+}
+.trang_thai p a:hover {
+	color: #ff9601;
+}
+
+.trang_thai p * {
+	color: white;
+}
+
+
+.tapphim{
+	background-color: black;
+	color:white;
+	font-weight:bold;
+	font-size:17px;
+	border-radius: 0;
+	padding: 0.5rem 1rem;
+	font-family: arial ;
+}
+
+.tapphim:hover{
+	background: #ff9601;
+}
+
+
+
+
+.tapphim:first-child {
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem;
+}
+
+
+.tapphim:last-child {
+    margin-bottom: 0;
+    border-bottom-right-radius: 0rem;
+    border-bottom-left-radius: 0rem;
+}
+
+.tapphim_active{
+	background-color: #ff9601;
+}
+
+
+.menu .dropdown-menu{
+	background-color: black;
+	color:white;
+	padding: 0rem;
+	font-weight: bold;
+	border-radius: 0px;
+}
+
+.menu .dropdown-menu .dropdown-item{
+	font-weight:400;
+	color: white;
+}
+
+
+.menu .dropdown-menu .dropdown-item:hover{
+	font-weight:400;
+	color: #ff9601;
+	background-color: black;
+}
+
+
+
+
+
+

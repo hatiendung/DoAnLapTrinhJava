@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="admin/template/head::head"></head>
+
+<head>
+
+	<style type="text/css">
+		.thumb-image {
+			/* width: 200px; */
+			padding: 5px 0px;
+			max-height: 200px;
+			min-height: 200px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="wrapper">
+		<nav th:replace="admin/template/navbar::navbar"></nav>
+		<aside th:replace="admin/template/aside::aside"></aside>
+
+
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col col-md-12" style="background-color: white;">
+						<h5 style="font-size: 32px; font-weight: 400;">CHỈNH SỬA
+							THÔNG TIN PHIM</h5>
+						<form th:action="@{/admin/add-new-film}" method="post" enctype="multipart/form-data">
+							<div class="form-row">
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="newFilm">Tên phim</label> <input th:value="${movieUpdate.nameMovie}"
+											type="text" class="form-control" id="newFilm" aria-describedby="emailHelp"
+											placeholder="Nhập tên phim">
+
+									</div>
+								</div>
+
+							</div>
+
+							<div class="form-row">
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Trạng thái phim</label>
+										<select class="form-control" id="exampleFormControlSelect1">
+											<option value="0">Sắp chiếu</option>
+											<option value="1">Đang chiếu</option>
+											<option value="2">Hoàn thành</option>
+
+
+
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Năm sản xuất</label> <select
+											class="form-control" id="chooseYear">
+											<option value="2019">Năm 2019</option>
+											<option value="2018">Năm 2018</option>
+											<option value="2017">Năm 2017</option>
+											<option value="2016">Năm 2016</option>
+
+
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="exampleFormControlSelect1">Quốc gia sản
+											xuất</label> <select class="form-control" id="country" name="countryId">
+
+											<option th:each="c : ${countryList}" th:value="${c.idCountry}"
+												th:text="${c.nameCountry}">quoc gia</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-row p-2">
+								<fieldset class="border p-2 col-md-12 field_theloaiphim mb-3">
+
+									<legend class="legend-theloaiphim">
+										<label>Thể loại phim</label>
+									</legend>
+									<div class="row">
+										<div th:each="c : ${categorys}" class="col-md-4 mb-3">
+											<div class="custom-control custom-checkbox">
+												<input th:classappend="${#lists.contains(categoryList, c) ?'da_check':'no_check'}"
+                                                 type="checkbox" th:value="${c.idCategory}" th:id="${c.idCategory}" name="category" class="custom-control-input col-md-4 mb-3" > 
+                                                 
+                                                
+                                                 <label class="custom-control-label"  th:for="${c.idCategory}" th:text="${c.nameCategory}">Check this custom
+													checkbox</label>
+                                            </div>
+                                        </div>
+                                    </div>
+								</fieldset>
+
+
+							</div>
+
+							<div class="form-row">
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="soTap">Số tập</label> <input type="number"
+											th:value="${movieUpdate.numberEpisodeMovie}"
+											class="form-control" id="soTap" aria-describedby="abc"
+											placeholder="Nhập số tập phim">
+
+									</div>
+								</div>
+
+							</div>
+
+							<div class="form-row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="noidungphim">Nội dung phim</label>
+										<textarea th:text="${movieUpdate.content}"
+											placeholder="Nhập nội dung phim" class="form-control"
+											id="noidungphim" rows="8"></textarea>
+									</div>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="imgFile">Ảnh đại diện</label> <input type="file"
+											class="form-control-file" name="imgFile"
+											id="fileUploadAvatar">
+										<div id="imageAvatar">
+											<img class="thumb-image" th:src="@{/images/movie/}+ ${movieUpdate.linkMovie} + '.jpg'" alt="">
+
+										</div>
+
+									</div>
+								</div>
+
+
+								<div class="col-md-4 mb-3">
+									<div class="form-group">
+										<label for="imgFile">Ảnh slide (Tùy chọn)</label> <input
+											type="file" class="form-control-file" name="imgFile"
+											id="fileUploadSlide">
+										<div id="imageSlide">
+											<img th:if="${linkSlide != ''}" class="thumb-image" th:src="@{/images/slide/} + ${linkSlide} + '.jpg'" alt="">
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+
+							<button type="submit" class="btn btn-primary mb-3">Thêm
+								phim mới</button>
+						</form>
+
+					</div>
+
+
+				</div>
+
+			</div>
+			<div id="page-wrapper">
+				<footer th:replace="admin/template/footer::footer"></footer>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+
+<script th:inline="javascript" type="text/javascript">
+	$(document).ready(function () {
+
+		var status = [[${ movieUpdate.status }]];
+		$("#exampleFormControlSelect1").val(status).attr("selected");
+
+		var year = [[${ movieUpdate.yearProduce }]];
+		$("#chooseYear").val(year).attr("selected");
+
+
+		var country = [[${ movieUpdate.country.idCountry }]];
+		$("#country").val(country).attr("selected");
+
+		$(".da_check").attr('checked', true);
+
+		var linkImg = [[${ movieUpdate.linkMovie }]] + ".jpg";
+
+		//$("#imageAvatar").append("<img th:src=" + '@{/images/movie/}' + linkImg + "/>");
+		
+
+
+
+	});
+
+</script>
+
+
+
+<script>
+	$(document)
+		.ready(
+			function () {
+				$("#fileUploadAvatar")
+					.on(
+						'change',
+						function () {
+							//Get count of selected files
+							var countFiles = $(this)[0].files.length;
+							var imgPath = $(this)[0].value;
+							var extn = imgPath
+								.substring(
+									imgPath
+										.lastIndexOf('.') + 1)
+								.toLowerCase();
+							var image_holder = $("#imageAvatar");
+							image_holder.empty();
+							if (extn == "gif" || extn == "png" ||
+								extn == "jpg" ||
+								extn == "jpeg") {
+								if (typeof (FileReader) != "undefined") {
+									//loop for each file selected for uploaded.
+									for (var i = 0; i < countFiles; i++) {
+										var reader = new FileReader();
+										reader.onload = function (
+											e) {
+											$(
+												"<img />", {
+													"src": e.target.result,
+													"class": "thumb-image"
+												})
+												.appendTo(
+													image_holder);
+										}
+										image_holder.show();
+										reader
+											.readAsDataURL($(this)[0].files[i]);
+									}
+								}
+							}
+
+						});
+			});
+</script>
+
+
+
+<script>
+	$(document)
+		.ready(
+			function () {
+				$("#fileUploadSlide")
+					.on(
+						'change',
+						function () {
+							//Get count of selected files
+							var countFiles = $(this)[0].files.length;
+							var imgPath = $(this)[0].value;
+							var extn = imgPath
+								.substring(
+									imgPath
+										.lastIndexOf('.') + 1)
+								.toLowerCase();
+							var image_holder = $("#imageSlide");
+							image_holder.empty();
+							if (extn == "gif" || extn == "png" ||
+								extn == "jpg" ||
+								extn == "jpeg") {
+								if (typeof (FileReader) != "undefined") {
+									//loop for each file selected for uploaded.
+									for (var i = 0; i < countFiles; i++) {
+										var reader = new FileReader();
+										reader.onload = function (
+											e) {
+											$(
+												"<img />", {
+													"src": e.target.result,
+													"class": "thumb-image"
+												})
+												.appendTo(
+													image_holder);
+										}
+										image_holder.show();
+										reader
+											.readAsDataURL($(this)[0].files[i]);
+									}
+								}
+							}
+
+						});
+			});
+</script>
+
+</html>
