@@ -17,4 +17,6 @@ public interface TrailerRepository extends JpaRepository<Trailer, Integer> {
 	List<Trailer> findByMovie(Movie movie);
 
 	Trailer findByLinkTrailer(String linkTrailer);
+
+	void deleteByLinkTrailer(String linkTrailer);
 }

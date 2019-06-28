@@ -1,8 +1,16 @@
 package com.javawebspringboot.websitemovie.controller.admin;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.javawebspringboot.websitemovie.model.Category;
 import com.javawebspringboot.websitemovie.model.Episode;
 import com.javawebspringboot.websitemovie.model.Movie;
 import com.javawebspringboot.websitemovie.model.Slide;
@@ -48,23 +57,60 @@ public class AdminHomeController {
 
 	@Autowired
 	private TrailerService trailerService;
-	
+
 	@Autowired
 	private ActorService actorService;
 
 	@Autowired
 	private DirectorService directorService;
-	
+
 	@RequestMapping("/admin")
 	public String showHomePage(Model model) {
-		model.addAttribute("totalMovie", movieService.countMovie());
-		model.addAttribute("totalEpisode", episodeService.countEpisode());
+
+		List<Movie> listMovie = movieService.findTop10ByOrderByViewDesc();
+		List<Category> listCategorieList = categoryService.findAllCategory();
+
+		List<String> lbCategory = new ArrayList<String>();
+		List<Float> pointCategory = new ArrayList<>();
+
+		if (listCategorieList.size() > 0) {
+			categoryService.getDataChart(lbCategory, pointCategory, listCategorieList);
+		}
+		model.addAttribute("lbCategory", lbCategory);
+		model.addAttribute("pointCategory", pointCategory);
+
+		List<String> label = new ArrayList<String>();
+		List<Integer> point = new ArrayList<Integer>();
+
+		if (listMovie.size() > 0) {
+
+			movieService.getDataChart(label, point, listMovie);
+
+		}
+		model.addAttribute("label", label);
+		model.addAttribute("point", point);
+
 		return "admin/home";
 	}
 
 	@RequestMapping("/admin/danh-sach-phim")
-	public String showListMovie(Model model) {
-		model.addAttribute("listMovie", movieService.findAllMovie());
+	public String showListMovie(Model model,@RequestParam("page") Optional<Integer> page) {
+		
+		Sort sortable = Sort.by("datetimePost").descending();
+		int size = 15;
+		int currentPage = page.orElse(1);
+		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
+		Page<Movie> movieList = movieService.findAllMovie(pageable);
+
+		int totalPages = movieList.getTotalPages();
+		if (totalPages > 0) {
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+			model.addAttribute("totalPages", totalPages);
+			model.addAttribute("pageNumbers", pageNumbers);
+		}
+		
+		
+		model.addAttribute("listMovie", movieList);
 		return "admin/listMovie";
 	}
 
@@ -177,10 +223,19 @@ public class AdminHomeController {
 		return "redirect:/admin/phim/{linkMovie}";
 	}
 
+	@RequestMapping("/admin/delete-trailer/{linkTrailer}/movie/{linkMovie}")
+	public String deleteTrailer(@PathVariable(name = "linkTrailer") String linkTrailer,
+			@PathVariable(name = "linkMovie") String linkMovie) {
+
+		trailerService.deleteTrailer(linkTrailer);
+		return "redirect:/admin/phim/{linkMovie}";
+	}
+
 	@RequestMapping("/admin/tim-kiem-phim/")
 	public String searchMovie(Model model, @RequestParam(name = "keyWord") String keyWord) {
 		List<Movie> movieList = movieService.searchMovie(keyWord);
 		model.addAttribute("movieList", movieList);
+		model.addAttribute("keyWord", keyWord);
 		return "admin/searchMovie";
 	}
 
@@ -191,8 +246,7 @@ public class AdminHomeController {
 		model.addAttribute("directorList", directorService.findAllDerector());
 		return "admin/actorDirector";
 	}
-	
-	
+
 	@RequestMapping("/admin/add-new-actor-director")
 	public String addNewActorDirector(@RequestParam(name = "name") String name,
 			@RequestParam(name = "actor_director") Integer actor_director,

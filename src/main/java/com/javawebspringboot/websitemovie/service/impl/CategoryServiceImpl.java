@@ -12,11 +12,11 @@ import com.javawebspringboot.websitemovie.service.CategoryService;
 
 @Service
 @Transactional
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
-	
+
 	@Override
 	public List<Category> findAllCategory() {
 		return categoryRepository.findAll();
@@ -25,6 +25,21 @@ public class CategoryServiceImpl implements CategoryService{
 	@Override
 	public Category findByCodeCategory(String codeCategory) {
 		return categoryRepository.findByCodeCategory(codeCategory);
+	}
+
+	@Override
+	public void getDataChart(List<String> lbCategory, List<Float> pointCategory, List<Category> listCategorieList) {
+		float sum = 0;
+		for (Category category2 : listCategorieList) {
+			sum += category2.getMovieList().size();
+		}
+		for (Category category : listCategorieList) {
+			float size = category.getMovieList().size();
+			float persent = (size / sum)*100;
+		
+			lbCategory.add(category.getNameCategory());
+			pointCategory.add(persent);
+		}
 	}
 
 }

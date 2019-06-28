@@ -1,5 +1,6 @@
 package com.javawebspringboot.websitemovie.service.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -89,6 +90,15 @@ public class TrailerServiceImpl implements TrailerService {
 	@Override
 	public Trailer findByLinkTrailer(String linkTrailer) {
 		return trailerRepository.findByLinkTrailer(linkTrailer);
+	}
+
+	@Override
+	public void deleteTrailer(String linkTrailer) {
+		trailerRepository.deleteByLinkTrailer(linkTrailer);
+		String UPLOAD_FOLDER = System.getProperty("user.dir") + "/src/main/resources/static/video/trailer/";
+		File fileDelete = new File(UPLOAD_FOLDER + linkTrailer + ".mp4");
+		fileDelete.delete();
+		
 	}
 
 }

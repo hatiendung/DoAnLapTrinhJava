@@ -15,7 +15,7 @@
 	</style>
 </head>
 
-<body>
+<body style="background-color: #2f323e;">
 
 	<div id="wrapper">
 		<nav th:replace="admin/template/navbar::navbar"></nav>
@@ -40,33 +40,10 @@
 									</div>
 								</div>
 
-							</div>
-
-							<div class="form-row">
 								<div class="col-md-4 mb-3">
 									<div class="form-group">
-										<label for="exampleFormControlSelect1">Trạng thái phim</label>
-										<select class="form-control" id="exampleFormControlSelect1">
-											<option value="0">Sắp chiếu</option>
-											<option value="1">Đang chiếu</option>
-											<option value="2">Hoàn thành</option>
-
-
-
-										</select>
-									</div>
-								</div>
-
-								<div class="col-md-4 mb-3">
-									<div class="form-group">
-										<label for="exampleFormControlSelect1">Năm sản xuất</label> <select
-											class="form-control" id="chooseYear">
-											<option value="2019">Năm 2019</option>
-											<option value="2018">Năm 2018</option>
-											<option value="2017">Năm 2017</option>
-											<option value="2016">Năm 2016</option>
-
-
+										<label for="exampleFormControlSelect1">Năm sản xuất</label>
+										<select class="form-control" id="nam_sx_phim">
 										</select>
 									</div>
 								</div>
@@ -81,7 +58,10 @@
 										</select>
 									</div>
 								</div>
+
 							</div>
+
+
 
 							<div class="form-row p-2">
 								<fieldset class="border p-2 col-md-12 field_theloaiphim mb-3">
@@ -178,7 +158,21 @@
 
 </body>
 
+<script>
+	$(document).ready(function () {
+		var d = new Date();
+		var temp = d.getFullYear();
+		var year = parseInt(temp);
+		$("#nam_sx_phim").append("<option  value='" + year + "' >Năm " + year + "</option>");
+		$("#nam_sx_phim").append("<option  value='" + (year - 1) + "' >Năm " + (year - 1) + "</option>");
+		$("#nam_sx_phim").append("<option  value='" + (year - 2) + "' >Năm " + (year - 2) + "</option>");
+		$("#nam_sx_phim").append("<option  value='" + (year - 3) + "' >Năm " + (year - 3) + "</option>");
+		$("#nam_sx_phim").append("<option  value='" + (year - 4) + "' >Năm " + (year - 4) + "</option>");
+		$("#nam_sx_phim").append("<option  value='" + (year - 5) + "' >Năm " + (year - 5) + "</option>");
 
+
+	});
+</script>
 <script th:inline="javascript" type="text/javascript">
 	$(document).ready(function () {
 
@@ -186,7 +180,7 @@
 		$("#exampleFormControlSelect1").val(status).attr("selected");
 
 		var year = [[${ movieUpdate.yearProduce }]];
-		$("#chooseYear").val(year).attr("selected");
+		$("#nam_sx_phim").val(year).attr("selected");
 
 
 		var country = [[${ movieUpdate.country.idCountry }]];
@@ -197,7 +191,7 @@
 		var linkImg = [[${ movieUpdate.linkMovie }]] + ".jpg";
 
 		//$("#imageAvatar").append("<img th:src=" + '@{/images/movie/}' + linkImg + "/>");
-		
+
 
 
 

@@ -75,7 +75,9 @@ public class MoviceServiceImpl implements MovieService {
 			categories.add(categoryRepository.findByIdCategory(idCategory));
 		}
 		saveImageAvartarToDisk(avatar, linkMovie);
-
+		
+		// phim sap chieu
+		movie.setStatus(0);
 		movie.setUserPost(userPost);
 		movie.setDatetimePost(LocalDateTime.now());
 		movie.setCategoryList(categories);
@@ -228,6 +230,37 @@ public class MoviceServiceImpl implements MovieService {
 	@Override
 	public List<Movie> findByYearProduce(Integer year) {
 		return movieRepository.findByYearProduce(year);
+	}
+
+	@Override
+	public Page<Movie> findAllMovieByCategory(Category category, Pageable pageable) {
+		List<Category> categoryList = new ArrayList<Category>();
+		categoryList.add(category);
+		return movieRepository.findByCategoryList(categoryList, pageable);
+	}
+
+	@Override
+	public Page<Movie> findAllMovieByYearProduce(Integer year, Pageable pageable) {
+		
+		return movieRepository.findByYearProduce(year,pageable);
+	}
+
+	@Override
+	public List<Movie> findTop10ByOrderByViewDesc() {
+		return movieRepository.findTop10ByOrderByViewDesc();
+	}
+
+	@Override
+	public void getDataChart(List<String> label, List<Integer> point, List<Movie> listMovie) {
+		for (Movie movie : listMovie) {
+			label.add(movie.getNameMovie());
+			point.add(movie.getView());
+		}
+	}
+
+	@Override
+	public Page<Movie> findAllMovie(Pageable pageable) {
+		return movieRepository.findAll(pageable);
 	}
 
 }

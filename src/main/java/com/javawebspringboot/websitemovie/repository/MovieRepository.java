@@ -9,8 +9,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.javawebspringboot.websitemovie.model.Category;
 import com.javawebspringboot.websitemovie.model.Country;
 import com.javawebspringboot.websitemovie.model.Movie;
+import com.javawebspringboot.websitemovie.model.Slide;
 
 @Repository
 @Transactional
@@ -19,6 +21,8 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 	//Movie findTop1ByOrderByIdMovieDesc();
 
 	Page<Movie> findByCountry(Country country, Pageable pageable);
+	
+	Page<Movie> findByCategoryList(List<Category> categoryList, Pageable pageable);
 
 	List<Movie> findAllByOrderByDatetimePostDesc();
 
@@ -35,6 +39,9 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 	Movie findByIdMovie(Integer idMovie);
 
 	List<Movie> findTop12ByOrderByViewDesc();
+	
+	
+	List<Movie> findTop10ByOrderByViewDesc();
 
 	@Query("SELECT m FROM Movie m where m.nameMovie LIKE %?1% ORDER BY datetimePost DESC")
 	List<Movie> searchMovie(String keyWord);
@@ -42,6 +49,10 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 	long count();
 
 	List<Movie> findByYearProduce(Integer year);
+
+	Page<Movie> findByYearProduce(Integer year, Pageable pageable);
+
+	Movie findBySlide(Slide slide);
 	
 	
 }

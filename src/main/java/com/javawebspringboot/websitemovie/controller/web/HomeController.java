@@ -114,6 +114,71 @@ public class HomeController {
 		return "web/movieCountry";
 	}
 
+	@RequestMapping("/the-loai/{codeCategory}")
+	public String showmovieCategory(Model model, @PathVariable(name = "codeCategory") String codeCategory,
+			@RequestParam("page") Optional<Integer> page) {
+
+		Category category = categoryService.findByCodeCategory(codeCategory);
+		Sort sortable = Sort.by("datetimePost").descending();
+		int size = 16;
+		int currentPage = page.orElse(1);
+		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
+		Page<Movie> movieCategoryList = movieService.findAllMovieByCategory(category, pageable);
+
+		int totalPages = movieCategoryList.getTotalPages();
+		if (totalPages > 0) {
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+			model.addAttribute("totalPages", totalPages);
+			model.addAttribute("pageNumbers", pageNumbers);
+		}
+
+		// tim kiem theo the loai
+		model.addAttribute("codeCategory", codeCategory);
+		String strCategory = "Phim " + category.getNameCategory();
+		model.addAttribute("title", strCategory);
+		model.addAttribute("strCategory", strCategory.toUpperCase());
+		model.addAttribute("movieCategoryList", movieCategoryList);
+
+		// menu
+		model.addAttribute("categoryList", categoryService.findAllCategory());
+		model.addAttribute("countryList", countryService.findAllCountry());
+		model.addAttribute("listMovieSC", movieService.findTop10MovieComingSoon());
+
+		return "web/movieCategory";
+	}
+	
+	
+	
+	
+	
+	@RequestMapping("/phim-moi/{year}")
+	public String getMovieByYear(Model model, @PathVariable(name = "year") Integer year,
+			@RequestParam("page") Optional<Integer> page) {
+		
+		Sort sortable = Sort.by("datetimePost").descending();
+		int size = 16;
+		int currentPage = page.orElse(1);
+		Pageable pageable = PageRequest.of(currentPage - 1, size, sortable);
+		Page<Movie> movieList = movieService.findAllMovieByYearProduce(year, pageable);
+
+		int totalPages = movieList.getTotalPages();
+		if (totalPages > 0) {
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+			model.addAttribute("totalPages", totalPages);
+			model.addAttribute("pageNumbers", pageNumbers);
+		}
+		
+		model.addAttribute("year", year);
+
+		model.addAttribute("movieList", movieList);
+		// menu
+		model.addAttribute("categoryList", categoryService.findAllCategory());
+		model.addAttribute("countryList", countryService.findAllCountry());
+		model.addAttribute("listMovieSC", movieService.findTop10MovieComingSoon());
+		// menu
+		return "web/movieByYear";
+	}
+
 	@RequestMapping("/phim/{linkMovie}")
 	public String showMovieDescription(Model model, @PathVariable(name = "linkMovie") String linkMovie) {
 
@@ -167,23 +232,6 @@ public class HomeController {
 		model.addAttribute("countryList", countryService.findAllCountry());
 
 		return "web/playTrailer";
-	}
-
-	@RequestMapping("/the-loai/{codeCategory}")
-	public String showmovieCategory(Model model, @PathVariable(name = "codeCategory") String codeCategory) {
-		// menu
-		model.addAttribute("categoryList", categoryService.findAllCategory());
-		model.addAttribute("countryList", countryService.findAllCountry());
-		model.addAttribute("listMovieSC", movieService.findTop10MovieComingSoon());
-
-		// tim kiem theo the loai
-		Category category = categoryService.findByCodeCategory(codeCategory);
-		String strCategory = "Phim " + category.getNameCategory();
-		model.addAttribute("title", strCategory);
-		model.addAttribute("strCategory", strCategory.toUpperCase());
-		model.addAttribute("category", category);
-
-		return "web/movieCategory";
 	}
 
 	@RequestMapping("/dien-vien/{codeActor}")
@@ -245,21 +293,6 @@ public class HomeController {
 		}
 	}
 
-	@RequestMapping("/phim-moi/{year}")
-	public String getMovieByYear(Model model, @PathVariable(name = "year") Integer year) {
-		model.addAttribute("year", year);
-
-		for (Movie movie : movieService.findByYearProduce(year)) {
-			System.out.println("movie " + movie.getNameMovie());
-		}
-
-		model.addAttribute("movieList", movieService.findByYearProduce(year));
-		// menu
-		model.addAttribute("categoryList", categoryService.findAllCategory());
-		model.addAttribute("countryList", countryService.findAllCountry());
-		model.addAttribute("listMovieSC", movieService.findTop10MovieComingSoon());
-		// menu
-		return "web/movieByYear";
-	}
+	
 
 }

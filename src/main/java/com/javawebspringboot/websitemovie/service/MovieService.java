@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.javawebspringboot.websitemovie.model.Category;
 import com.javawebspringboot.websitemovie.model.Country;
 import com.javawebspringboot.websitemovie.model.Movie;
 
@@ -29,6 +30,8 @@ public interface MovieService {
 	void updateMovie(Movie movie);
 
 	List<Movie> findTop12ByOrderByViewDesc();
+	
+	List<Movie> findTop10ByOrderByViewDesc();
 
 	List<Movie> searchMovie(String keyWord);
 
@@ -37,5 +40,13 @@ public interface MovieService {
 	void sortEpisode(Movie movie);
 
 	List<Movie> findByYearProduce(Integer year);
+
+	Page<Movie> findAllMovieByCategory(Category category, Pageable pageable);
+
+	Page<Movie> findAllMovieByYearProduce(Integer year, Pageable pageable);
+
+	void getDataChart(List<String> label, List<Integer> point, List<Movie> listMovie);
+
+	Page<Movie> findAllMovie(Pageable pageable);
 
 }

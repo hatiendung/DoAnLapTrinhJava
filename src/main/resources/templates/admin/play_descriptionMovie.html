@@ -4,292 +4,333 @@
 <head th:replace="admin/template/head::head"></head>
 
 <head>
-    <style type="text/css">
-        body {
-            color: #000000;
-            font-weight: 400;
-        }
-        
-        .tapphim {
-            background-color: #7e8089;
-            color: white;
-            font-weight: 400;
-        }
-        
-        .tapphim:hover {
-            background: black;
-            color: white;
-        }
-        
-        .tapphim:first-child {
-            border-top-left-radius: 0rem;
-            border-top-right-radius: 0rem;
-        }
-        
-        .tapphim:last-child {
-            margin-bottom: 0;
-            border-bottom-right-radius: 0rem;
-            border-bottom-left-radius: 0rem;
-        }
-        
-        .tapphim_active {
-            background-color: black;
-        }
-        
-        .abcddd {
-            font-size: 28px;
-            font-weight: 400;
-            color: black;
-        }
-        
-        .btn_xoa {
-            background: #bf0707;
-        }
-        
-        .btn_xoa:hover {
-            background: #bf0707;
-            color: white;
-        }
-    </style>
+<style type="text/css">
+body {
+	color: #000000;
+	font-weight: 400;
+}
+
+.tapphim {
+	background-color: #7e8089;
+	color: white;
+	font-weight: 400;
+}
+
+.tapphim:hover {
+	background: black;
+	color: white;
+}
+
+.tapphim:first-child {
+	border-top-left-radius: 0rem;
+	border-top-right-radius: 0rem;
+}
+
+.tapphim:last-child {
+	margin-bottom: 0;
+	border-bottom-right-radius: 0rem;
+	border-bottom-left-radius: 0rem;
+}
+
+.tapphim_active {
+	background-color: black;
+}
+
+.abcddd {
+	font-size: 28px;
+	font-weight: 400;
+	color: black;
+}
+
+.btn_xoa {
+	background: #bf0707;
+}
+
+.btn_xoa:hover {
+	background: #bf0707;
+	color: white;
+}
+</style>
 </head>
 
-<body>
+<body style="background-color: #2f323e;">
 
-    <div id="wrapper">
-        <nav th:replace="admin/template/navbar::navbar"></nav>
-        <aside th:replace="admin/template/aside::aside"></aside>
+	<div id="wrapper">
+		<nav th:replace="admin/template/navbar::navbar"></nav>
+		<aside th:replace="admin/template/aside::aside"></aside>
 
 
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <div class="row">
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
 
-                    <div class="col col-md-8 px-0">
-                        <div class="col col-md-12 pt-3 mb-4" th:if="${episode == null}">
-                            <video th:src="@{/video/movie/default.mp4}" width="100%" class="mb-2" controls>
+					<div class="col col-md-8 px-0">
+						<div class="col col-md-12 pt-3" th:if="${episode == null}">
+							<video th:src="@{/video/movie/default.mp4}" width="100%"
+								class="mb-2" controls>
 							</video>
-                            <h4 class="abcddd" th:text="'Phim ' + ${movie.nameMovie} + ' chưa có tập nào' "></h4>
+							<h4 class="abcddd"
+								th:text="'Phim ' + ${movie.nameMovie} + ' chưa có tập nào' "></h4>
 
-                        </div>
-
-
-                        <div class="col col-md-12 p-3" th:if="${episode != null}">
-                            <video th:src="@{/video/movie/}+${episode.linkEpisode}+ '.mp4'" width="100%" class="mb-2" controls>
-							</video>
-                            <div class="d-flex flex-wrap">
+						</div>
 
 
-                                <div th:each="episodes, itrStat:  ${movie.episodeSeriesList}">
-                                    <a th:classappend="${episode.linkEpisode}  == ${episodes.linkEpisode} ? 'list-group-item mr-3 mb-3 tapphim tapphim_active' : 'list-group-item mr-3 mb-3 tapphim' " th:href="@{/admin/xem-phim/} + ${episodes.linkEpisode}" th:text="'Tập ' + ${episodes.ordinalNumbers}">item 1</a>
+						<div class="col col-md-12 p-3">
 
-                                </div>
-
-
-                            </div>
-
-
-
-                            <div class="d-flex flex-wrap">
+							<div th:if="${episode != null}">
+								<video th:src="@{/video/movie/}+${episode.linkEpisode}+ '.mp4'"
+									width="100%" class="mb-2" controls>
+								</video>
+								<div class="d-flex flex-wrap">
 
 
+									<div th:each="episodes, itrStat:  ${movie.episodeSeriesList}">
+										<a
+											th:classappend="${episode.linkEpisode}  == ${episodes.linkEpisode} ? 'list-group-item mr-3 mb-3 tapphim tapphim_active' : 'list-group-item mr-3 mb-3 tapphim' "
+											th:href="@{/admin/xem-phim/} + ${episodes.linkEpisode}"
+											th:text="'Tập ' + ${episodes.ordinalNumbers}">item 1</a>
 
-                                <div th:each="trailer, itrStat:  ${movie.trailerList}">
-                                    <a th:href="@{/admin/xem-phim/} + ${trailer.linkTrailer}" class="list-group-item mr-3 mb-3 tapphim" th:text="'Trailer ' + ${trailer.ordinalNumbers}">item 1</a>
+									</div>
+								</div>
+							</div>
 
-                                </div>
+							<div th:if="  ${movie.trailerList != null} ">
+								<div class="d-flex flex-wrap">
+									<div th:each="trailer, itrStat:  ${movie.trailerList}">
+										<a th:href="@{/admin/xem-phim/} + ${trailer.linkTrailer}"
+											class="list-group-item mr-3 mb-3 tapphim"
+											th:text="'Trailer ' + ${trailer.ordinalNumbers}">item 1</a>
+									</div>
 
-                            </div>
-
-                        </div>
-
-
-                        <div class="col col-md-12">
-                            <div class="row">
-                                <div class="col col-md-6">
-
-                                    <h4 class="abcddd">Thêm tập phim</h4>
-                                    <form th:action="@{/admin/phim/}+${movie.linkMovie}+ '/them-tap-phim-moi'" method="post" enctype="multipart/form-data">
+								</div>
+							</div>
 
 
 
+						</div>
 
-                                        <input type="file" id="customFileLangHTML" name="videoEpisode" accept=".mp4"> <label for="customFileLangHTML"></label>
 
-                                        <div class="form-group my-3">
+						<div class="col col-md-12">
+							<div class="row">
+								<div class="col col-md-6">
 
-                                            <input type="submit" class="btn btn-primary" value="Thêm Tập Phim" />
-                                        </div>
-
-                                    </form>
-
-                                </div>
-                                <div class="col col-md-6">
-
-                                    <h4 class="abcddd">Thêm trailer phim</h4>
-                                    <form th:action="@{/admin/trailer/}+${movie.linkMovie}+ '/them-trailer-phim'" method="post" enctype="multipart/form-data">
+									<h4 class="abcddd">Thêm tập phim</h4>
+									<form
+										th:action="@{/admin/phim/}+${movie.linkMovie}+ '/them-tap-phim-moi'"
+										method="post" enctype="multipart/form-data">
 
 
 
 
-                                        <input type="file" id="customFileLangHTML" name="videoTrailer" accept=".mp4"> <label for="customFileLangHTML"></label>
+										<input type="file" id="customFileLangHTML" name="videoEpisode"
+											accept=".mp4"> <label for="customFileLangHTML"></label>
 
-                                        <div class="form-group my-3">
+										<div class="form-group my-3">
 
-                                            <input type="submit" class="btn btn-primary" value="Thêm Trailer Phim" />
-                                        </div>
+											<input type="submit" class="btn btn-primary"
+												value="Thêm Tập Phim" />
+										</div>
 
-                                    </form>
+									</form>
 
-                                </div>
+								</div>
+								<div class="col col-md-6">
 
-                            </div>
-                        </div>
-
-
-                        <div class="col col-md-12">
-
-                            <h4 class="abcddd">Cập nhật hoặc xóa tập phim</h4>
-                            <table class="table table-bordered" style="background: white;">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">STT</th>
-                                        <th scope="col">Tập phim</th>
-                                        <th scope="col">Thay đổi video</th>
-                                        <th scope="col">Xóa video</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="trailer, itrStat:  ${movie.trailerList}">
-                                        <td scope="row" th:text="${itrStat.index + 1}">1</td>
-                                        <td scope="row" th:text="'Tập ' + ${trailer.ordinalNumbers}">1</td>
-                                        <td>
-                                            <form method="post" enctype="multipart/form-data" class="d-flex justify-content-between">
-                                                <input type="file" accept=".mp4" name="fileExcel" /> <input class="btn btn-outline-success" type="submit" value="Upload" />
-                                            </form>
-                                        </td>
-                                        <td><a th:href="@{/admin/delete-trailer/} + ${trailer.linkTrailer}" class="btn btn-danger btn_xoa" role="button" aria-pressed="true">Xóa video</a></td>
-                                    </tr>
-
-                                </tbody>
-                            </table>
-
-
-                        </div>
+									<h4 class="abcddd">Thêm trailer phim</h4>
+									<form
+										th:action="@{/admin/trailer/}+${movie.linkMovie}+ '/them-trailer-phim'"
+										method="post" enctype="multipart/form-data">
 
 
 
 
+										<input type="file" id="customFileLangHTML" name="videoTrailer"
+											accept=".mp4"> <label for="customFileLangHTML"></label>
+
+										<div class="form-group my-3">
+
+											<input type="submit" class="btn btn-primary"
+												value="Thêm Trailer Phim" />
+										</div>
+
+									</form>
+
+								</div>
+
+							</div>
+						</div>
 
 
-                        <div class="col col-md-12">
+						<div class="col col-md-12">
 
-                            <h4 class="abcddd">Cập nhật hoặc xóa trailer phim</h4>
-                            <table class="table table-bordered" style="background: white;">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th scope="col">Trailer phim</th>
-                                        <th scope="col">Thay đổi video</th>
-                                        <th scope="col">Xóa video</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="trailer, itrStat:  ${movie.trailerList}">
-                                        <td scope="row" th:text="${itrStat.index + 1}">1</td>
-                                        <td th:text="'Trailer ' + ${trailer.ordinalNumbers}"></td>
-                                        <td>
-                                            <form method="post" enctype="multipart/form-data" class="d-flex justify-content-between">
-                                                <input type="file" accept=".mp4" name="fileExcel" /> <input class="btn btn-outline-success" type="submit" value="Upload" />
-                                            </form>
-                                        </td>
-                                        <td><a th:href="@{/admin/delete-episode/} + ${trailer.linkTrailer}" class="btn btn-danger btn_xoa" role="button" aria-pressed="true">Xóa video</a></td>
-                                    </tr>
+							<h4 class="abcddd">Cập nhật hoặc xóa tập phim</h4>
+							<table class="table table-bordered" style="background: white;">
+								<thead>
+									<tr>
+										<th scope="col">STT</th>
+										<th scope="col">Tập phim</th>
+										<th scope="col">Thay đổi video</th>
+										<th scope="col">Xóa video</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="episode, itrStat:  ${movie.episodeSeriesList}">
+										<td scope="row" th:text="${itrStat.index + 1}">1</td>
+										<td scope="row" th:text="'Tập ' + ${episode.ordinalNumbers}">1</td>
+										<td>
+											<form method="post" enctype="multipart/form-data"
+												class="d-flex justify-content-between">
+												<input type="file" accept=".mp4" name="fileExcel" /> <input
+													class="btn btn-outline-success" type="submit"
+													value="Upload" />
+											</form>
+										</td>
+										<td><a
+											th:href="@{/admin/delete-episode/} + ${episode.linkEpisode}"
+											class="btn btn-danger btn_xoa" role="button"
+											aria-pressed="true">Xóa video</a></td>
+									</tr>
 
-                                </tbody>
-                            </table>
-
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="col col-md-4 px-0">
-                        <div class="col col-md-12 pt-3">
-                            <h4 th:text="'Thông tin phim ' + ${movie.nameMovie} " class="mb-2 abcddd"></h4>
+								</tbody>
+							</table>
 
 
-                            <div class="card border-0 border-white">
-                                <div class="card-body trang_thai pb-0">
-                                    <p>
-                                        Trạng thái: <span>Full 55/55 Vietsub</span>
-                                    </p>
-                                    <p>
-                                        Lượt xem: <span th:text=" ${movie.view}"></span>
-                                    </p>
-                                    <p>
-                                        Đạo diễn: <span>Trịnh Vĩ Văn</span>
-                                    </p>
-                                    <p>
-                                        Thời lượng: <span>45 phút / tập</span>
-                                    </p>
-                                    <p>
-                                        Số tập: <span th:text="${movie.numberEpisodeMovie}"></span>
-                                    </p>
-                                    <p>
-                                        Tình trạng: <span th:if=" ${movie.status ==0}">Sắp
-											chiếu</span> <span th:if=" ${movie.status ==1}">Đang chiếu</span> <span th:if=" ${movie.status ==2}">Hoàn thành</span>
-                                    </p>
-                                    <p>
-                                        Ngôn ngữ: <span>Phụ đề Việt + Lồng tiếng</span>
-                                    </p>
-                                    <p>
-                                        Năm sản xuất: <span th:text="${movie.yearProduce}"></span>
-                                    </p>
-                                    <p class="quoc-gia">
-                                        Quốc gia sản xuất:
-                                        <a th:href="@{/quoc-gia/} + ${movie.country.codeCountry}" th:text=" ' ' + ${movie.country.nameCountry} "> </a>
-                                    </p>
-                                    <p class="the-loai">
-                                        Thể loại: <span th:each="category, itrStat : ${movie.categoryList}"> <a
+						</div>
+
+
+
+
+
+
+						<div class="col col-md-12">
+
+							<h4 class="abcddd">Cập nhật hoặc xóa trailer phim</h4>
+							<table class="table table-bordered" style="background: white;">
+								<thead>
+									<tr>
+										<th>STT</th>
+										<th scope="col">Trailer phim</th>
+										<th scope="col">Thay đổi video</th>
+										<th scope="col">Xóa video</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="trailer, itrStat:  ${movie.trailerList}">
+										<td scope="row" th:text="${itrStat.index + 1}">1</td>
+										<td th:text="'Trailer ' + ${trailer.ordinalNumbers}"></td>
+										<td>
+											<form method="post" enctype="multipart/form-data"
+												class="d-flex justify-content-between">
+												<input type="file" accept=".mp4" name="fileExcel" /> <input
+													class="btn btn-outline-success" type="submit"
+													value="Upload" />
+											</form>
+										</td>
+										<td><a
+											th:href="@{/admin/delete-trailer/} + ${trailer.linkTrailer} + '/movie/' + ${movie.linkMovie}"
+											class="btn btn-danger btn_xoa" role="button"
+											aria-pressed="true">Xóa video</a></td>
+									</tr>
+
+								</tbody>
+							</table>
+
+
+						</div>
+
+					</div>
+
+
+
+					<div class="col col-md-4 px-0">
+						<div class="col col-md-12 pt-3">
+							<h4 th:text="'Thông tin phim ' + ${movie.nameMovie} "
+								class="mb-2 abcddd"></h4>
+
+
+							<div class="card border-0 border-white">
+								<div class="card-body trang_thai pb-0">
+									<p th:if="${movie.numberEpisodeMovie > 1}">
+										Trạng thái: <span
+											th:if="${#lists.size(movie.episodeSeriesList) == movie.numberEpisodeMovie}"
+											th:text="'Full ' + ${movie.numberEpisodeMovie} + '/' + ${movie.numberEpisodeMovie} + ' Tập'">Full
+											55/55 Vietsub</span>
+											 <span
+											th:if="${#lists.size(movie.episodeSeriesList) < movie.numberEpisodeMovie}"
+											th:text="${#lists.size(movie.episodeSeriesList)} + '/' + ${movie.numberEpisodeMovie} + ' Tập'">Full
+											55/55 Vietsub</span>
+									</p>
+
+									<p>
+										Lượt xem: <span th:text=" ${movie.view}"></span>
+									</p>
+									<p>
+										Đạo diễn: <span th:if="${movie.director}"
+											th:text="${movie.director.nameDirector}">Trịnh Vĩ Văn</span>
+									</p>
+									<p>
+										Thời lượng: <span>45 phút / tập</span>
+									</p>
+									<p>
+										Số tập: <span th:text="${movie.numberEpisodeMovie}"></span>
+									</p>
+									<p>
+										Tình trạng: <span th:if=" ${movie.status ==0}">Sắp
+											chiếu</span> <span th:if=" ${movie.status ==1}">Đang chiếu</span> <span
+											th:if=" ${movie.status ==2}">Hoàn thành</span>
+									</p>
+									<p>
+										Ngôn ngữ: <span>Phụ đề Việt + Lồng tiếng</span>
+									</p>
+									<p>
+										Năm sản xuất: <span th:text="${movie.yearProduce}"></span>
+									</p>
+									<p class="quoc-gia">
+										Quốc gia sản xuất: <a
+											th:href="@{/quoc-gia/} + ${movie.country.codeCountry}"
+											th:text=" ' ' + ${movie.country.nameCountry} "> </a>
+									</p>
+									<p class="the-loai">
+										Thể loại: <span
+											th:each="category, itrStat : ${movie.categoryList}"> <a
 											th:href="@{/the-loai/} + ${category.codeCategory}"
 											th:if="${itrStat.index} <= ${#lists.size(movie.categoryList) - 1} "
 											th:text="${category.nameCategory}">the loai</a> <span
 											th:if="${itrStat.index} < ${#lists.size(movie.categoryList)-1} "
 											th:text="', '">the loai</span>
-                                        </span>
+										</span>
 
-                                    </p>
-                                    <p class="dien-vien">
-                                        Diễn viên: <span th:each="actor, itrStat : ${movie.actorList} "> <a
+									</p>
+									<p class="dien-vien">
+										Diễn viên: <span
+											th:each="actor, itrStat : ${movie.actorList} "> <a
 											th:href="@{/dien-vien/} + ${actor.codeActor}"
 											th:if="${itrStat.index} <= ${#lists.size(movie.actorList) - 1} "
 											th:text="${actor.nameActor}">dien vien</a> <span
 											th:if="${itrStat.index} < ${#lists.size(movie.actorList)-1} "
 											th:text="', '">dien vien</span>
-                                        </span>
-                                    </p>
+										</span>
+									</p>
 
-                                </div>
-                                <hr class="mt-0">
-                                <div class="card-body pt-0">
-                                    <h4 class="m-0 abcddd">Tóm tắt nội dung phim</h4>
-                                    <p class="my-2" th:text="${movie.content}">sadfsdaf</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+								</div>
+								<hr class="mt-0">
+								<div class="card-body pt-0">
+									<h4 class="m-0 abcddd">Tóm tắt nội dung phim</h4>
+									<p class="my-2" th:text="${movie.content}">sadfsdaf</p>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                </div>
+				</div>
 
-            </div>
-            <div id="page-wrapper">
-                <footer th:replace="admin/template/footer::footer"></footer>
-            </div>
-        </div>
+			</div>
+			<div id="page-wrapper">
+				<footer th:replace="admin/template/footer::footer"></footer>
+			</div>
+		</div>
 
-    </div>
+	</div>
 
 </body>
 

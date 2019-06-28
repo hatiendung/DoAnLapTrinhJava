@@ -48,8 +48,8 @@ public class WebAPI {
 	public void downloadMovie(@PathVariable(name = "linkEpisode") String linkEpisode, HttpServletResponse response)
 			throws Exception {
 		String VIDEO_MOVIE = System.getProperty("user.dir") + "/src/main/resources/static/video/movie/";
-		File file = new File(VIDEO_MOVIE + "test.pdf");
-		response.setContentType("application/pdf");
+		File file = new File(VIDEO_MOVIE + linkEpisode + ".mp4");
+		response.setContentType("application");
 		response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
 		BufferedInputStream inStrem = new BufferedInputStream(new FileInputStream(file));
 		BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream());

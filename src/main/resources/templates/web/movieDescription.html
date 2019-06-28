@@ -48,14 +48,17 @@
                         
                         <div class="card border-0 border-white">
                             <div class="card-body trang_thai">
-                                <p>
-                                    Trạng thái: <span>Full 55/55 Vietsub</span>
+                                <p th:if="${movie.numberEpisodeMovie > 1}">
+                                    Trạng thái: <span th:if="${#lists.size(movie.episodeSeriesList) == movie.numberEpisodeMovie}" th:text="'Full ' + ${movie.numberEpisodeMovie} + '/' + ${movie.numberEpisodeMovie} + ' Tập'">Full 55/55 Vietsub</span>
+                                    <span th:if="${#lists.size(movie.episodeSeriesList) < movie.numberEpisodeMovie}" th:text="${#lists.size(movie.episodeSeriesList)} + '/' + ${movie.numberEpisodeMovie} + ' Tập'">Full 55/55 Vietsub</span>
                                 </p>
+                                
+                               
                                 <p>
                                     Lượt xem: <span th:text=" ${movie.view}"></span>
                                 </p>
                                 <p>
-                                    Đạo diễn: <span th:text="${movie.director.nameDirector}">Trịnh Vĩ Văn</span>
+                                    Đạo diễn: <span th:if="${movie.director !=null}" th:text="${movie.director.nameDirector}">Trịnh Vĩ Văn</span>
                                 </p>
                                 <p>
                                     Thời lượng: <span>45 phút / tập</span>

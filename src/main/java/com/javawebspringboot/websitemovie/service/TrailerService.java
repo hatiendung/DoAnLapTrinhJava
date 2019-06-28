@@ -8,4 +8,6 @@ public interface TrailerService {
 	void addNewTrailer(String linkMovie, MultipartFile videoEpisode);
 
 	Trailer findByLinkTrailer(String linkTrailer);
+
+	void deleteTrailer(String linkTrailer);
 }

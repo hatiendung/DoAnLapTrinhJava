@@ -87,7 +87,7 @@ public class Movie implements Serializable {
 	@OneToMany(mappedBy = "movie")
 	private List<Trailer> trailerList;
 
-	@OneToOne(mappedBy = "movie", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "movie")
 	private Slide slide;
 
 	@Transient

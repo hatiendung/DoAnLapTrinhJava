@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -50,6 +51,8 @@ public class EpisodeServiceImpl implements EpisodeService {
 		List<Episode> movieEpisode = episodeSeriesRepository.findByMovie(movie);
 		Episode newEpisode = new Episode();
 		String linkEpisode = "";
+		int status = 0;
+
 		if (movieEpisode.size() > 0) {
 			// da ton tai it nhat 1 tap phim
 			// can stt cua tap phim
@@ -60,8 +63,13 @@ public class EpisodeServiceImpl implements EpisodeService {
 		} else {
 			// chua co tap phim
 			// mac dinh la tap 1
+
 			newEpisode.setOrdinalNumbers(0);
 			linkEpisode = getLinkEpisode(movie.getLinkMovie(), countRow);
+
+			// phim co 1 tap duoc upload len nghia la phim dang chieu
+			// update lai status phim
+			status = 1;
 		}
 
 		boolean result = saveEpisodeToDisk(linkEpisode, videoEpisode);
@@ -69,7 +77,19 @@ public class EpisodeServiceImpl implements EpisodeService {
 			newEpisode.setLinkEpisode(linkEpisode);
 			newEpisode.setMovie(movie);
 			newEpisode.setOrdinalNumbers(newEpisode.getOrdinalNumbers() + 1);
+			// neu phim n tap va tap vua upload len la tap thu m+1 = n
+			// nghia la phim da full tap
+			// cap nhat trang thai ve 2 // da hoan thanh
+			if ((movieEpisode.size()) + 1 == movie.getNumberEpisodeMovie()) {
+				status = 2;
+			}
 			episodeSeriesRepository.save(newEpisode);
+			movie.setDatetimePost(LocalDateTime.now());
+			movieRepository.save(movie);
+			if (status != 0) {
+				movie.setStatus(status);
+				movieRepository.save(movie);
+			}
 
 		} else {
 			System.out.println("Khong luu duoc tap phim vao may tinh");

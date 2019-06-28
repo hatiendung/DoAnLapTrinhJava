@@ -15,7 +15,11 @@
 }
 
 .download_phim:hover {
+	background: #ff9601;
 	color: white;
+	font-weight: bold;
+	font-size: 17px;
+	border-radius: 0px;
 }
 
 .alert_download {
@@ -63,7 +67,8 @@
 		</div>
 		<div class="row">
 			<h4 class="my-3 ml-3">
-				<a style="color: #ff9601;" th:text="${title}" th:href="@{/phim/} + ${movie.linkMovie}">ten phim</a>
+				<a style="color: #ff9601;" th:text="${title}"
+					th:href="@{/phim/} + ${movie.linkMovie}">ten phim</a>
 			</h4>
 
 			<div class="col col-md-12">

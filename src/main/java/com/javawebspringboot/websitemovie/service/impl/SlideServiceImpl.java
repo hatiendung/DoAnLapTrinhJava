@@ -17,6 +17,7 @@ public class SlideServiceImpl implements SlideService {
 
 	@Autowired
 	private SlideRepository slideRepository;
+	
 
 	@Override
 	public List<Slide> findAllSlide() {
@@ -47,6 +48,9 @@ public class SlideServiceImpl implements SlideService {
 
 	@Override
 	public void deleteSlideByIdSlide(Integer idSlide) {
+		Slide slide  = slideRepository.findByIdSlide(idSlide);
+		slide.setMovie(null);
+		slideRepository.save(slide);
 		slideRepository.deleteByIdSlide(idSlide);
 
 	}

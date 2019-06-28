@@ -3,71 +3,83 @@
 
 <head th:replace="admin/template/head::head"></head>
 
-<body>
+<body style="background-color: #2f323e;">
 
-    <div id="wrapper">
-        <nav th:replace="admin/template/navbar::navbar"></nav>
-        <aside th:replace="admin/template/aside::aside"></aside>
-
-
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-
-                    <div class="col col-md-12 p-0">
-
-                        <table class="table table-hover table-striped table-bordered">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Ảnh đại diện</th>
-                                    <th>Tên phim</th>
-                                    <th>Trạng thái</th>
-                                    <th>Ngày cập nhật</th>
-                                    <th>Cập nhật thông tin</th>
-                                    <th>Xóa phim</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <tr th:each="movie , itrStat : ${movieList}">
+	<div id="wrapper">
+		<nav th:replace="admin/template/navbar::navbar"></nav>
+		<aside th:replace="admin/template/aside::aside"></aside>
 
 
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
 
-                                    <td style="vertical-align: middle;" th:text="${itrStat.index + 1}">id</td>
-                                    <td style="vertical-align: middle;">
-                                        <a th:href="@{/admin/phim/}+${movie.linkMovie}"><img width="80px" height="120px" th:alt="${movie.nameMovie}" th:src="@{/images/movie/}+${movie.linkMovie}+.jpg" th:title="${movie.nameMovie}"></a>
-                                    </td>
-                                    <td style="vertical-align: middle;" th:text="${movie.nameMovie}"></td>
-                                    <td style="vertical-align: middle;" th:if="${movie.status == 0}">Phim sắp chiếu</td>
-                                    <td style="vertical-align: middle;" th:if="${movie.status == 1}">Phim đang chiếu</td>
-                                    <td style="vertical-align: middle;" th:if="${movie.status == 2}">Phim đã hoàn thành</td>
-                                    <td style="vertical-align: middle;" th:text="${#temporals.format(movie.datetimePost, 'dd-MM-yyyy HH:mm:ss')}"></td>
-                                    <td style="vertical-align: middle;"><a type="button" class="btn btn-primary" th:href="@{/admin/update/}+${movie.linkMovie}">Cập nhật</a></td>
-                                    <td style="vertical-align: middle;"><a type="button" class="btn btn-danger" th:href="@{/admin/delete/}+${movie.idMovie}">Xóa phim</a></td>
+					<div class="col col-md-12 p-0">
 
-                                </tr>
-                                
-                            </tbody>
-                        </table>
+						<table class="table table-hover table-striped table-bordered">
+							<thead class="thead-dark">
+								<tr>
+									<th>STT</th>
+									<th>Ảnh đại diện</th>
+									<th>Tên phim</th>
+									<th>Trạng thái</th>
+									<th>Ngày cập nhật</th>
+									<th>Cập nhật thông tin</th>
+									<th>Xóa phim</th>
+								</tr>
+							</thead>
+							<tbody>
 
-                        
-                    </div>
+								<tr th:each="movie , itrStat : ${movieList}">
 
 
 
+									<td style="vertical-align: middle;"
+										th:text="${itrStat.index + 1}">id</td>
+									<td style="vertical-align: middle;"><a
+										th:href="@{/admin/phim/}+${movie.linkMovie}"><img
+											width="80px" height="120px" th:alt="${movie.nameMovie}"
+											th:src="@{/images/movie/}+${movie.linkMovie}+.jpg"
+											th:title="${movie.nameMovie}"></a></td>
+									<td style="vertical-align: middle;"
+										th:text="${movie.nameMovie}"></td>
+									<td style="vertical-align: middle;"
+										th:if="${movie.status == 0}">Phim sắp chiếu</td>
+									<td style="vertical-align: middle;"
+										th:if="${movie.status == 1}">Phim đang chiếu</td>
+									<td style="vertical-align: middle;"
+										th:if="${movie.status == 2}">Phim đã hoàn thành</td>
+									<td style="vertical-align: middle;"
+										th:text="${#temporals.format(movie.datetimePost, 'dd-MM-yyyy HH:mm:ss')}"></td>
+									<td style="vertical-align: middle;"><a type="button"
+										class="btn btn-primary"
+										th:href="@{/admin/update/}+${movie.linkMovie}">Cập nhật</a></td>
+									<td style="vertical-align: middle;"><a type="button"
+										class="btn btn-danger"
+										th:href="@{/admin/delete/}+${movie.idMovie}">Xóa phim</a></td>
+
+								</tr>
+
+							</tbody>
+						</table>
+						<p class="mt-2 mb-0 mx-3" th:text="'Đã tìm thấy ' +${#lists.size(movieList)} + ' kết quả tìm kiếm từ khóa: ' +${keyWord}  "></p>
+
+					</div>
 
 
 
-                </div>
 
-            </div>
-            <div id="page-wrapper">
-                <footer th:replace="admin/template/footer::footer"></footer>
-            </div>
-        </div>
 
-    </div>
+
+				</div>
+
+			</div>
+			<div id="page-wrapper">
+				<footer th:replace="admin/template/footer::footer"></footer>
+			</div>
+		</div>
+
+	</div>
 
 </body>
 
