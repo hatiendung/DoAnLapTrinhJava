@@ -35,7 +35,8 @@ public class Movie implements Serializable {
 	@Column(name = "name_movie")
 	private String nameMovie;
 
-	
+	@Column(name = "enable")
+	private int enable;
 
 	@Column(name = "status")
 	private Integer status;
@@ -51,9 +52,6 @@ public class Movie implements Serializable {
 
 	@Column(name = "datetime_post")
 	private LocalDateTime datetimePost;
-
-	@Column(name = "language")
-	private String language;
 
 	@Column(name = "view")
 	private Integer view;
@@ -100,19 +98,18 @@ public class Movie implements Serializable {
 		super();
 	}
 
-	public Movie(String nameMovie,  Integer status, String content, String linkMovie,
-			int numberEpisodeMovie, LocalDateTime datetimePost, String language, Integer view, int yearProduce,
-			Director director, Country country, User userPost, List<Category> categoryList, List<Actor> actorList,
-			List<Episode> episodeSeriesList, List<Trailer> trailerList, Slide slide, MultipartFile avatar,
-			MultipartFile slideImg) {
+	public Movie(String nameMovie, int enable, Integer status, String content, String linkMovie, int numberEpisodeMovie,
+			LocalDateTime datetimePost, Integer view, int yearProduce, Director director, Country country,
+			User userPost, List<Category> categoryList, List<Actor> actorList, List<Episode> episodeSeriesList,
+			List<Trailer> trailerList, Slide slide, MultipartFile avatar, MultipartFile slideImg) {
 		super();
 		this.nameMovie = nameMovie;
+		this.enable = enable;
 		this.status = status;
 		this.content = content;
 		this.linkMovie = linkMovie;
 		this.numberEpisodeMovie = numberEpisodeMovie;
 		this.datetimePost = datetimePost;
-		this.language = language;
 		this.view = view;
 		this.yearProduce = yearProduce;
 		this.director = director;
@@ -127,10 +124,14 @@ public class Movie implements Serializable {
 		this.slideImg = slideImg;
 	}
 
-	
-	
-	
-	
+	public int getEnable() {
+		return enable;
+	}
+
+	public void setEnable(int enable) {
+		this.enable = enable;
+	}
+
 	public List<Trailer> getTrailerList() {
 		return trailerList;
 	}
@@ -187,8 +188,6 @@ public class Movie implements Serializable {
 		this.nameMovie = nameMovie;
 	}
 
-
-
 	public Integer getStatus() {
 		return status;
 	}
@@ -227,14 +226,6 @@ public class Movie implements Serializable {
 
 	public void setDatetimePost(LocalDateTime datetimePost) {
 		this.datetimePost = datetimePost;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
 	}
 
 	public Integer getView() {

@@ -261,5 +261,12 @@ public class AdminHomeController {
 		}
 		return "redirect:/admin/actor-director";
 	}
+	
+	
+	@RequestMapping("/admin/phim-khong-duoc-chieu")
+	public String movieDisable(Model model) {
+		model.addAttribute("movieList", movieService.findAllByEnableOrderByDatetimePost());
+		return "admin/movieDisable";
+	}
 
 }

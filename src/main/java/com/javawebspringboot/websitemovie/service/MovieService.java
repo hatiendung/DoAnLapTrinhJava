@@ -49,4 +49,8 @@ public interface MovieService {
 
 	Page<Movie> findAllMovie(Pageable pageable);
 
+	void updateEnableOrDisableMovie(Integer idMovie);
+
+	List<Movie> findAllByEnableOrderByDatetimePost();
+
 }

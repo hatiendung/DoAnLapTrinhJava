@@ -18,19 +18,19 @@ import com.javawebspringboot.websitemovie.model.Slide;
 @Transactional
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
-	//Movie findTop1ByOrderByIdMovieDesc();
+	Page<Movie> findByCountryAndEnable(Country country, int enable, Pageable pageable);
 
-	Page<Movie> findByCountry(Country country, Pageable pageable);
-	
-	Page<Movie> findByCategoryList(List<Category> categoryList, Pageable pageable);
+	Page<Movie> findByCategoryListAndEnable(List<Category> categoryList, int enable, Pageable pageable);
 
-	List<Movie> findAllByOrderByDatetimePostDesc();
+	List<Movie> findByEnableOrderByDatetimePostDesc(int enable);
 
-	List<Movie> findTop10ByStatusOrderByDatetimePostDesc(int status);
+	Page<Movie> findByEnableOrderByDatetimePostDesc(int enable, Pageable pageable);
 
-	List<Movie> findTop16ByStatusOrderByDatetimePostDesc(int status);
+	List<Movie> findTop10ByStatusAndEnableOrderByDatetimePostDesc(int status, int enable);
 
-	List<Movie> findByCountry(Country country);
+	List<Movie> findTop16ByStatusAndEnableOrderByDatetimePostDesc(int status, int enable);
+
+	List<Movie> findByCountryAndEnable(Country country, int enable);
 
 	Movie findByLinkMovie(String linkMovie);
 
@@ -38,21 +38,25 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
 	Movie findByIdMovie(Integer idMovie);
 
-	List<Movie> findTop12ByOrderByViewDesc();
-	
-	
-	List<Movie> findTop10ByOrderByViewDesc();
+	List<Movie> findTop12ByEnableOrderByViewDesc(int enable);
+
+	List<Movie> findTop10ByEnableOrderByViewDesc(int enable);
 
 	@Query("SELECT m FROM Movie m where m.nameMovie LIKE %?1% ORDER BY datetimePost DESC")
 	List<Movie> searchMovie(String keyWord);
 
 	long count();
 
-	List<Movie> findByYearProduce(Integer year);
+	List<Movie> findByYearProduceAndEnable(Integer year, int enable);
 
-	Page<Movie> findByYearProduce(Integer year, Pageable pageable);
+	Page<Movie> findByYearProduceAndEnable(Integer year, int enable, Pageable pageable);
 
 	Movie findBySlide(Slide slide);
-	
+
+
+	Page<Movie> findAllByOrderByDatetimePostDesc(Pageable pageable);
+
+	List<Movie> findAllByEnableOrderByDatetimePost(int enable);
+
 	
 }

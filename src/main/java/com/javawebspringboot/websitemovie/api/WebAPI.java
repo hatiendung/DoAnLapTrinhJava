@@ -21,6 +21,7 @@ import com.javawebspringboot.websitemovie.model.Actor;
 import com.javawebspringboot.websitemovie.model.Director;
 import com.javawebspringboot.websitemovie.service.ActorService;
 import com.javawebspringboot.websitemovie.service.DirectorService;
+import com.javawebspringboot.websitemovie.service.MovieService;
 import com.javawebspringboot.websitemovie.service.SlideService;
 import com.javawebspringboot.websitemovie.utils.CustomActor;
 import com.javawebspringboot.websitemovie.utils.CustomDirector;
@@ -36,12 +37,21 @@ public class WebAPI {
 
 	@Autowired
 	private DirectorService directorService;
+	
+	@Autowired MovieService movieService;
 
 	@RequestMapping(value = "/api/ajax/idSlide/{idSlide}", method = RequestMethod.GET)
 	@ResponseBody
 	public void ajax(@PathVariable(name = "idSlide") Integer idSlide) {
 
 		slideService.updateSlideByStatus(idSlide);
+	}
+
+	@RequestMapping(value = "/api/ajax/idMovie/{idMovie}", method = RequestMethod.GET)
+	@ResponseBody
+	public void enableOrDisableMovie(@PathVariable(name = "idMovie") Integer idMovie) {
+		movieService.updateEnableOrDisableMovie(idMovie);
+
 	}
 
 	@RequestMapping(value = "/api/download-movie/{linkEpisode}", method = RequestMethod.GET)

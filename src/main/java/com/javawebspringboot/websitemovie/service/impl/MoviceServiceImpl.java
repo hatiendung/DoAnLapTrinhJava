@@ -36,6 +36,7 @@ import com.javawebspringboot.websitemovie.service.MovieService;
 @Service
 @Transactional
 public class MoviceServiceImpl implements MovieService {
+	
 
 	@Autowired
 	private UserRepository userRepository;
@@ -54,7 +55,7 @@ public class MoviceServiceImpl implements MovieService {
 
 	@Override
 	public List<Movie> findAllMovie() {
-		return movieRepository.findAllByOrderByDatetimePostDesc();
+		return movieRepository.findByEnableOrderByDatetimePostDesc(1);
 	}
 
 	@Override
@@ -75,9 +76,10 @@ public class MoviceServiceImpl implements MovieService {
 			categories.add(categoryRepository.findByIdCategory(idCategory));
 		}
 		saveImageAvartarToDisk(avatar, linkMovie);
-		
+
 		// phim sap chieu
 		movie.setStatus(0);
+		movie.setEnable(1);
 		movie.setUserPost(userPost);
 		movie.setDatetimePost(LocalDateTime.now());
 		movie.setCategoryList(categories);
@@ -139,7 +141,7 @@ public class MoviceServiceImpl implements MovieService {
 
 	@Override
 	public List<Movie> findByCountry(Country country) {
-		return movieRepository.findByCountry(country);
+		return movieRepository.findByCountryAndEnable(country, 1);
 	}
 
 	@Override
@@ -149,13 +151,13 @@ public class MoviceServiceImpl implements MovieService {
 
 	@Override
 	public List<Movie> findTop10MovieComingSoon() {
-		return movieRepository.findTop10ByStatusOrderByDatetimePostDesc(0);
+		return movieRepository.findTop10ByStatusAndEnableOrderByDatetimePostDesc(0, 1);
 	}
 
 	@Override
 	public List<Movie> findTop16MovieNewUpdate() {
 		// TODO Auto-generated method stub
-		return movieRepository.findTop16ByStatusOrderByDatetimePostDesc(1);
+		return movieRepository.findTop16ByStatusAndEnableOrderByDatetimePostDesc(1, 1);
 	}
 
 	@Override
@@ -185,7 +187,7 @@ public class MoviceServiceImpl implements MovieService {
 
 	@Override
 	public Page<Movie> findAllMovieByContry(Country country, Pageable pageable) {
-		return movieRepository.findByCountry(country, pageable);
+		return movieRepository.findByCountryAndEnable(country, 1, pageable);
 	}
 
 	@Override
@@ -198,7 +200,7 @@ public class MoviceServiceImpl implements MovieService {
 
 	@Override
 	public List<Movie> findTop12ByOrderByViewDesc() {
-		return movieRepository.findTop12ByOrderByViewDesc();
+		return movieRepository.findTop12ByEnableOrderByViewDesc(1);
 	}
 
 	@Override
@@ -229,25 +231,25 @@ public class MoviceServiceImpl implements MovieService {
 
 	@Override
 	public List<Movie> findByYearProduce(Integer year) {
-		return movieRepository.findByYearProduce(year);
+		return movieRepository.findByYearProduceAndEnable(year, 1);
 	}
 
 	@Override
 	public Page<Movie> findAllMovieByCategory(Category category, Pageable pageable) {
 		List<Category> categoryList = new ArrayList<Category>();
 		categoryList.add(category);
-		return movieRepository.findByCategoryList(categoryList, pageable);
+		return movieRepository.findByCategoryListAndEnable(categoryList, 1, pageable);
 	}
 
 	@Override
 	public Page<Movie> findAllMovieByYearProduce(Integer year, Pageable pageable) {
-		
-		return movieRepository.findByYearProduce(year,pageable);
+
+		return movieRepository.findByYearProduceAndEnable(year, 1, pageable);
 	}
 
 	@Override
 	public List<Movie> findTop10ByOrderByViewDesc() {
-		return movieRepository.findTop10ByOrderByViewDesc();
+		return movieRepository.findTop10ByEnableOrderByViewDesc(1);
 	}
 
 	@Override
@@ -260,7 +262,29 @@ public class MoviceServiceImpl implements MovieService {
 
 	@Override
 	public Page<Movie> findAllMovie(Pageable pageable) {
-		return movieRepository.findAll(pageable);
+		return movieRepository.findAllByOrderByDatetimePostDesc(pageable);
+	}
+
+	@Override
+	public void updateEnableOrDisableMovie(Integer idMovie) {
+
+		Movie movie = movieRepository.findByIdMovie(idMovie);
+		switch (movie.getEnable()) {
+		case 1:
+			movie.setEnable(0);
+			break;
+
+		case 0:
+			movie.setEnable(1);
+			;
+			break;
+		}
+		movieRepository.save(movie);
+	}
+
+	@Override
+	public List<Movie> findAllByEnableOrderByDatetimePost() {
+		return movieRepository.findAllByEnableOrderByDatetimePost(0);
 	}
 
 }
